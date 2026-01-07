@@ -1086,7 +1086,7 @@ footer {
                             MONTO_CUOTA: montoCuotaPromedio,
                             NUMERO_CUOTAS: numeroCuotasTotal,
                             COMPROBANTE: v['COMPROBANTE'] || '',
-                            ASESOR: (v.ASESOR || '').trim(),
+                            ASESORA: (v.ASESORA || '').trim(),
                             CONCEPTO: (v['CONCEPTO PAGADO'] || '').trim(),
                             CONDICIONES: (v['CONDICIONES DE PAGO:'] || '').trim(),
                             _searchKey: normalizeText(`${v.APELLIDOS} ${v.NOMBRES} ${v.DNI}`)
@@ -1187,7 +1187,7 @@ footer {
                             }
                             
                             // SIEMPRE asignar vendedora (columna G del drive de ventas → columna J de la plantilla)
-                            row['VENDEDORA'] = venta.ASESOR || '';
+                            row['VENDEDORA'] = venta.ASESORA || '';
                             row['MEDIO DE PAGO'] = venta.CONDICIONES || '';
                             
                             // Array para acumular observaciones
