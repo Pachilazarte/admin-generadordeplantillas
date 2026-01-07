@@ -86,7 +86,7 @@
         }
         
         .container {
-            max-width: 1000px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
             min-height: calc(100vh - 80px);
@@ -103,8 +103,8 @@
             text-align: center;
         }
         
-.logo {
-            max-width: 150px; /* Prueba con este tamaño */
+        .logo {
+            max-width: 250px;
             margin-bottom: 1rem;
         }
         
@@ -127,7 +127,7 @@
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
             border-radius: 20px;
-            padding: 1.5rem;
+            padding: 2.5rem;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
@@ -446,22 +446,62 @@
         .col-c3 { background-color: #d0e0e3; color: #134f5c; }
         .col-c4 { background-color: #f4cccc; color: #cc0000; }
         
-        /* Footer */
+        /* Footer Completo */
         footer {
-            text-align: center;
-            padding: 2rem;
-            color: white;
-            margin-top: 3rem;
-            font-size: 0.9rem;
+            background: var(--escencial-navy-dark);
+            padding: 0.8rem 0;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(0, 255, 255, 0.15);
         }
         
-        footer a {
-            color: var(--escencial-cyan);
-            text-decoration: none;
+        .footer-content {
+            max-width: 3000px; 
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-link {
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+        
+        .footer-link:hover {
+            transform: scale(1.05);
+        }
+        
+        .footer-logo {
+            max-height: 65px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            opacity: 0.9;
+        }
+        
+        .footer-text {
+            font-family: 'Catamaran', sans-serif;
+            font-size: 0.85rem;
+            color: var(--escencial-light);
+            margin: 0;
+            letter-spacing: 0.3px;
+        }
+        
+        .footer-text strong {
+            color: var(--escencial-cyan-light);
             font-weight: 600;
         }
         
-        /* Modal de conversión de moneda */
+        @media (max-width: 600px) {
+            .footer-content {
+                flex-direction: column;
+                gap: 0.8rem;
+                text-align: center;
+            }
+        }
+        
+        /* Responsive */
         .modal {
             display: none;
             position: fixed;
@@ -542,61 +582,75 @@
             .stat-value {
                 font-size: 1.5rem;
             }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
         }
-
-/* Footer con Logo */
-footer {
-    margin-top: 3rem;
-    padding-bottom: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.footer-badge {
-    background: rgba(255, 255, 255, 0.9); /* Fondo blanco casi sólido */
-    backdrop-filter: blur(10px);
-    padding: 0.8rem 2rem;
-    border-radius: 50px; /* Forma de píldora */
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    
-    display: flex;
-    align-items: center;
-    gap: 1rem; /* Espacio entre el texto y el logo */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.footer-badge:hover {
-    transform: translateY(-5px); /* Flota al pasar el mouse */
-    box-shadow: 0 15px 35px rgba(34, 217, 223, 0.3); /* Resplandor cyan */
-}
-
-.dev-by {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--escencial-gray);
-    font-weight: 600;
-}
-
-.logo-link {
-    display: flex;
-    align-items: center;
-}
-
-.footer-logo {
-    height: 35px; /* Altura controlada del logo */
-    width: auto;  /* El ancho se ajusta solo */
-    display: block;
-    transition: transform 0.3s ease;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-}
-
-.footer-badge:hover .footer-logo {
-    transform: scale(1.1); /* El logo crece un poquito al hacer hover */
-}git push org
-
+        
+        /* Modal de conversión de moneda */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-content h2 {
+            font-family: 'Catamaran', sans-serif;
+            color: var(--escencial-navy);
+            margin-bottom: 1rem;
+        }
+        
+        .modal-content p {
+            color: var(--escencial-gray);
+            margin-bottom: 2rem;
+        }
+        
+        .currency-input {
+            margin-bottom: 1.5rem;
+        }
+        
+        .currency-input label {
+            display: block;
+            font-weight: 600;
+            color: var(--escencial-navy);
+            margin-bottom: 0.5rem;
+        }
+        
+        .currency-input input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--escencial-cyan);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .currency-input input:focus {
+            outline: none;
+            border-color: var(--escencial-green);
+        }
     </style>
 </head>
 <body>
@@ -664,14 +718,17 @@ footer {
         </div>
     </div>
     
-<footer>
-    <div class="footer-badge">
-        <span class="dev-by">Desarrollado por</span>
-        <a href="https://escencialconsultora.com.ar" target="_blank" class="logo-link">
-            <img src="./img/logo-escencial.png" alt="Escencial Consultora" class="footer-logo">
-        </a>
-    </div>
-</footer>
+    <footer>
+        <div class="footer-content">
+            <a href="https://escencialconsultora.com.ar/index" target="_blank" class="footer-brand">
+                <img src="img/logo-escencial.png" alt="Escencial Logo" class="footer-logo">
+            </a>
+            
+            <div class="footer-info">
+                <p class="footer-text">© 2026 Todos los derechos reservados - Desarrollado por <strong>Escencial</strong></p>
+            </div>
+        </div>
+    </footer>
     
     <!-- Modal de conversión de moneda -->
     <div id="currency-modal" class="modal">
@@ -749,27 +806,73 @@ footer {
             return String(dni).replace(/\D/g, '');
         }
         
-        // FUNCIÓN: Detectar moneda extranjera
+        // FUNCIÓN: Detectar moneda extranjera y limpiar formatos
         // Formato: Si el valor termina en .01 = USD, si termina en .07 = BOB (Peso Boliviano)
-        function detectCurrency(value) {
+        // También maneja: "$16.000", "1x96000", valores truncados como "16" o "17"
+        function detectCurrency(value, moda) {
             if (!value) return { currency: 'ARS', baseValue: 0 };
-            const str = String(value);
+            let str = String(value).trim();
             
-            // Detectar BOB (Peso Boliviano) - termina en .07
-            if (str.includes('.07')) {
-                const baseValue = parseFloat(str.replace('.07', ''));
+            // Limpiar formato "$16.000" → "16000"
+            str = str.replace(/\$/g, '').replace(/\./g, '');
+            
+            // Detectar formato mal escrito "1x96000" → "96000"
+            const matchMalFormato = str.match(/^1x(\d+)$/i);
+            if (matchMalFormato) {
+                str = matchMalFormato[1];
+                console.warn(`⚠️ Formato corregido: "1x${matchMalFormato[1]}" → "${str}"`);
+            }
+            
+            // Detectar BOB (Peso Boliviano) - termina en 07
+            if (str.endsWith('07')) {
+                const baseValue = parseFloat(str.replace('07', ''));
                 return { currency: 'BOB', baseValue: baseValue };
             }
             
-            // Detectar USD (Dólar) - termina en .01
-            if (str.includes('.01')) {
-                const baseValue = parseFloat(str.replace('.01', ''));
+            // Detectar USD (Dólar) - termina en 01
+            if (str.endsWith('01')) {
+                const baseValue = parseFloat(str.replace('01', ''));
                 return { currency: 'USD', baseValue: baseValue };
             }
             
+            // Limpiar y convertir a número
+            const numValue = parseFloat(str.replace(/[^0-9]/g, ''));
+            
+            // COMPLETAR VALORES TRUNCADOS
+            // Si el valor es muy pequeño (ej: 16, 17, 88) y hay una moda, multiplicar
+            if (numValue > 0 && numValue < 1000 && moda && moda >= 10000) {
+                const valorCompleto = numValue * 1000;
+                console.log(`🔧 Valor truncado corregido: ${numValue} → ${valorCompleto} (cerca de moda: ${moda})`);
+                return { currency: 'ARS', baseValue: valorCompleto };
+            }
+            
             // Si no tiene marcador, es ARS (Pesos Argentinos)
-            const numValue = parseFloat(String(value).replace(/[^0-9.]/g, ''));
             return { currency: 'ARS', baseValue: numValue || 0 };
+        }
+        
+        // FUNCIÓN: Calcular moda de número de cuotas
+        function calcularModaCuotas(ventas) {
+            const frecuencias = {};
+            
+            ventas.forEach(v => {
+                const numCuotas = v.NUMERO_CUOTAS || 0;
+                if (numCuotas > 0 && numCuotas <= 10) { // Solo cuotas razonables (1-10)
+                    frecuencias[numCuotas] = (frecuencias[numCuotas] || 0) + 1;
+                }
+            });
+            
+            let moda = 2; // Default 2 cuotas si no se encuentra
+            let maxFrecuencia = 0;
+            
+            for (const [valor, frecuencia] of Object.entries(frecuencias)) {
+                if (frecuencia > maxFrecuencia) {
+                    maxFrecuencia = frecuencia;
+                    moda = parseInt(valor);
+                }
+            }
+            
+            console.log(`🎯 MODA DE CUOTAS: ${moda} cuota(s) (aparece ${maxFrecuencia} veces)`);
+            return moda;
         }
         
         // FUNCIÓN: Convertir a ARS usando las tasas ingresadas
@@ -920,6 +1023,28 @@ footer {
             
             setTimeout(() => {
                 try {
+                    // PRIMERA PASADA: Calcular moda sin corrección de truncados
+                    const valoresParaModa = ventasData.map(v => {
+                        const det = detectCurrency(v['VALOR PAGADO'], null);
+                        return det.baseValue;
+                    }).filter(v => v > 0);
+                    
+                    const frecuenciasModa = {};
+                    valoresParaModa.forEach(v => {
+                        frecuenciasModa[v] = (frecuenciasModa[v] || 0) + 1;
+                    });
+                    
+                    let modaPreliminar = 0;
+                    let maxFrecuencia = 0;
+                    for (const [valor, frecuencia] of Object.entries(frecuenciasModa)) {
+                        if (frecuencia > maxFrecuencia) {
+                            maxFrecuencia = frecuencia;
+                            modaPreliminar = parseFloat(valor);
+                        }
+                    }
+                    
+                    console.log(`🎯 MODA PRELIMINAR (para corrección): $${modaPreliminar}`);
+                    
                     // Normalizar alumnos
                     const alumnos = alumnosData.map(a => ({
                         ID: a.ID || '',
@@ -992,7 +1117,8 @@ footer {
                                     const num1 = parseInt(match[1]);
                                     const num2 = parseInt(match[2]);
                                     
-                                    // El número más grande es el monto, el más pequeño es la cantidad de cuotas
+                                    // CORRECCIÓN: El número MÁS PEQUEÑO es las cuotas, el MÁS GRANDE es el monto
+                                    // Ejemplo: "71900 x 1" → num1=71900, num2=1 → monto=71900, cuotas=1
                                     let monto, cuotas;
                                     if (num1 > num2) {
                                         monto = num1;
@@ -1000,6 +1126,12 @@ footer {
                                     } else {
                                         monto = num2;
                                         cuotas = num1;
+                                    }
+                                    
+                                    // Validación: cuotas debe ser razonable (1-10)
+                                    if (cuotas > 10) {
+                                        console.warn(`⚠️ Número de cuotas sospechoso: ${cuotas}. Intercambiando valores.`);
+                                        [monto, cuotas] = [cuotas, monto];
                                     }
                                     
                                     // Validación: si el "monto" es menor a 1000, probablemente es un error decimal
@@ -1051,18 +1183,22 @@ footer {
                         return { operaciones, totalCuotas, original };
                     }
                     
-                    // Normalizar ventas
+                    // Normalizar ventas (SEGUNDA PASADA con moda ya calculada)
                     const ventas = ventasData.map(v => {
                         const infoCuotas = parsearCuotas(v['VALOR PENDIENTE']);
                         
                         // CONVERTIR VALOR PAGADO si está en moneda extranjera
-                        const valorPagadoDeteccion = detectCurrency(v['VALOR PAGADO']);
+                        // Ahora con moda preliminar para corregir truncados
+                        const valorPagadoDeteccion = detectCurrency(v['VALOR PAGADO'], modaPreliminar);
                         const valorPagadoARS = convertToARS(valorPagadoDeteccion.baseValue, valorPagadoDeteccion.currency);
                         
                         // Log si hubo conversión
                         if (valorPagadoDeteccion.currency !== 'ARS') {
                             console.log(`💱 Conversión: ${v['APELLIDOS']} pagó ${valorPagadoDeteccion.baseValue} ${valorPagadoDeteccion.currency} = ${valorPagadoARS} ARS`);
                         }
+                        
+                        // Buscar columna de ASESOR/ASESORA (flexible)
+                        const asesor = v['ASESOR'] || v['ASESORA'] || v['Asesor'] || v['Asesora'] || '';
                         
                         // Calcular monto promedio de cuota y número total de cuotas
                         let montoCuotaPromedio = 0;
@@ -1086,15 +1222,18 @@ footer {
                             MONTO_CUOTA: montoCuotaPromedio,
                             NUMERO_CUOTAS: numeroCuotasTotal,
                             COMPROBANTE: v['COMPROBANTE'] || '',
-                            ASESORA: (v.ASESORA || '').trim(),
+                            ASESOR: asesor.trim(), // ← Flexible: busca ASESOR o ASESORA
                             CONCEPTO: (v['CONCEPTO PAGADO'] || '').trim(),
                             CONDICIONES: (v['CONDICIONES DE PAGO:'] || '').trim(),
                             _searchKey: normalizeText(`${v.APELLIDOS} ${v.NOMBRES} ${v.DNI}`)
                         };
                     });
                     
-                    // CALCULAR MODA usando valores YA CONVERTIDOS a ARS
-                    const modaInscripcion = calcularModaPagos(ventas);
+                    // CALCULAR MODA FINAL usando valores YA CONVERTIDOS y CORREGIDOS
+                    const modaFinal = calcularModaPagos(ventas);
+                    
+                    // CALCULAR MODA DE CUOTAS
+                    const modaCuotas = calcularModaCuotas(ventas);
                     
                     // Procesar cada alumno
                     alumnos.forEach((alumno, index) => {
@@ -1187,7 +1326,7 @@ footer {
                             }
                             
                             // SIEMPRE asignar vendedora (columna G del drive de ventas → columna J de la plantilla)
-                            row['VENDEDORA'] = venta.ASESORA || '';
+                            row['VENDEDORA'] = venta.ASESOR || '';
                             row['MEDIO DE PAGO'] = venta.CONDICIONES || '';
                             
                             // Array para acumular observaciones
@@ -1212,18 +1351,18 @@ footer {
                                 // Calcular cuotas retroactivamente
                                 // Si pagó significativamente más que la moda, asumimos que pagó inscripción + cuotas
                                 const totalPagado = valorPagado;
-                                const excedente = totalPagado - modaInscripcion;
+                                const excedente = totalPagado - modaFinal;
                                 
-                                if (excedente > modaInscripcion * 0.20) { // Si pagó al menos 20% más
+                                if (excedente > modaFinal * 0.20) { // Si pagó al menos 20% más
                                     // PAGO COMPLETO - Deducir que pagó el curso completo
-                                    const cuotasDeducidas = 2; // Por defecto 2 cuotas (lo más común)
+                                    const cuotasDeducidas = modaCuotas; // Usar moda de cuotas calculada
                                     const montoPorCuota = excedente / cuotasDeducidas;
                                     const porcentajeComision = 0.14;
                                     const fechaFormateada = formatearFechaExcel(venta.MARCA_TEMPORAL);
                                     
                                     row['CUOTAS'] = cuotasDeducidas;
                                     row['_cuotasCantidad'] = cuotasDeducidas;
-                                    row['INSCRIPCIÓN'] = modaInscripcion; // Corregir inscripción a la moda
+                                    row['INSCRIPCIÓN'] = modaFinal; // Corregir inscripción a la moda
                                     
                                     for (let i = 1; i <= cuotasDeducidas; i++) {
                                         row[`C${i}_FECHA`] = fechaFormateada;
@@ -1234,7 +1373,7 @@ footer {
                                     }
                                     
                                     // OBSERVACIÓN: Pago completo deducido
-                                    observaciones.push(`✅ Pagó curso completo ($${totalPagado.toLocaleString('es-AR')}). Moda inscripción: $${modaInscripcion.toLocaleString('es-AR')}. ${cuotasDeducidas} cuotas deducidas de $${montoPorCuota.toLocaleString('es-AR')} c/u`);
+                                    observaciones.push(`✅ Pagó curso completo ($${totalPagado.toLocaleString('es-AR')}). Moda inscripción: $${modaFinal.toLocaleString('es-AR')}. ${cuotasDeducidas} cuotas deducidas de $${montoPorCuota.toLocaleString('es-AR')} c/u`);
                                 }
                                 
                             } else if (infoCuotas.operaciones && infoCuotas.operaciones.length > 0) {
@@ -1268,12 +1407,12 @@ footer {
                                 console.log(`📋 CUOTAS PENDIENTES: ${alumno.APELLIDOS} - Inscripción: $${valorPagado}, ${numeroCuotas} cuota(s) pendiente(s)`);
                                 
                                 // Si pagó diferente a la moda en inscripción, agregar nota
-                                const diferenciaInscripcion = valorPagado - modaInscripcion;
+                                const diferenciaInscripcion = valorPagado - modaFinal;
                                 if (Math.abs(diferenciaInscripcion) > 100) {
                                     if (diferenciaInscripcion > 0) {
-                                        observaciones.push(`💰 Inscripción: Pagó $${diferenciaInscripcion.toLocaleString('es-AR')} más que moda ($${modaInscripcion.toLocaleString('es-AR')}). Total inscripción: $${valorPagado.toLocaleString('es-AR')}. Diferencia ajustada en cuotas`);
+                                        observaciones.push(`💰 Inscripción: Pagó $${diferenciaInscripcion.toLocaleString('es-AR')} más que moda ($${modaFinal.toLocaleString('es-AR')}). Total inscripción: $${valorPagado.toLocaleString('es-AR')}. Diferencia ajustada en cuotas`);
                                     } else {
-                                        observaciones.push(`💰 Inscripción: Pagó $${Math.abs(diferenciaInscripcion).toLocaleString('es-AR')} menos que moda ($${modaInscripcion.toLocaleString('es-AR')}). Total inscripción: $${valorPagado.toLocaleString('es-AR')}. Diferencia ajustada en cuotas`);
+                                        observaciones.push(`💰 Inscripción: Pagó $${Math.abs(diferenciaInscripcion).toLocaleString('es-AR')} menos que moda ($${modaFinal.toLocaleString('es-AR')}). Total inscripción: $${valorPagado.toLocaleString('es-AR')}. Diferencia ajustada en cuotas`);
                                     }
                                 }
                                 
@@ -1281,9 +1420,9 @@ footer {
                                 const totalCuotasEsperado = infoCuotas.operaciones.reduce((sum, op) => sum + (op.monto * op.cuotas), 0);
                                 if (totalCuotasEsperado > 0) {
                                     // Calcular si pagó más de lo esperado en cuotas
-                                    const totalEsperadoCurso = modaInscripcion + totalCuotasEsperado;
+                                    const totalEsperadoCurso = modaFinal + totalCuotasEsperado;
                                     if (valorPagado > totalEsperadoCurso) {
-                                        const adelanto = valorPagado - modaInscripcion;
+                                        const adelanto = valorPagado - modaFinal;
                                         observaciones.push(`⚡ Adelantó cuotas: Pagó $${adelanto.toLocaleString('es-AR')} extra. Se distribuyó en ${numeroCuotas} cuota(s) según valor pendiente`);
                                     }
                                 }
