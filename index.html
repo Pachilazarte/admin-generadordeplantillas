@@ -1062,12 +1062,15 @@
                     // NUEVA FUNCIÓN MEJORADA: Parsear información de cuotas desde VALOR PENDIENTE
                     // Maneja todos los patrones posibles: "x", "por", "*", "y", "+", ",", números solos, etc.
                     function parsearCuotas(valorPendienteStr) {
-                        if (!valorPendienteStr) return { operaciones: [], totalCuotas: 0 };
+                        // Si no hay valor o es NaN, considerar como Paz y Salvo
+                        if (!valorPendienteStr || valorPendienteStr === 'NaN' || valorPendienteStr === 'nan') {
+                            return { operaciones: [], totalCuotas: 0, pazYSalvo: true };
+                        }
                         
                         const original = String(valorPendienteStr).trim();
                         
                         // GRUPO 4: Estado "Paz y Salvo" (ya pagó todo o no debe nada)
-                        const estadosPazYSalvo = ['-', '.', '0', 'ok', 'saldado', 'listo', 'pagado', 'completo'];
+                        const estadosPazYSalvo = ['-', '.', '0', 'ok', 'saldado', 'listo', 'pagado', 'completo', 'nan'];
                         if (estadosPazYSalvo.includes(original.toLowerCase()) || original === '') {
                             return { operaciones: [], totalCuotas: 0, pazYSalvo: true };
                         }
@@ -1206,7 +1209,8 @@
                         
                         if (infoCuotas.operaciones && infoCuotas.operaciones.length > 0) {
                             const montoTotal = infoCuotas.operaciones.reduce((sum, op) => sum + (op.monto * op.cuotas), 0);
-                            montoCuotaPromedio = numeroCuotasTotal > 0 ? montoTotal / numeroCuotasTotal : 0;
+                            // Redondear SIEMPRE HACIA ARRIBA con máximo 2 decimales
+                            montoCuotaPromedio = numeroCuotasTotal > 0 ? Math.ceil((montoTotal / numeroCuotasTotal) * 100) / 100 : 0;
                         }
                         
                         return {
@@ -1224,7 +1228,7 @@
                             COMPROBANTE: v['COMPROBANTE'] || '',
                             ASESOR: asesor.trim(), // ← Flexible: busca ASESOR o ASESORA
                             CONCEPTO: (v['CONCEPTO PAGADO'] || '').trim(),
-                            CONDICIONES: (v['CONDICIONES DE PAGO:'] || '').trim(),
+                            TIPO_COMPROBANTE: (v['TIPO COMPROBANTE'] || '').trim(), // ← Cambiado a TIPO COMPROBANTE
                             _searchKey: normalizeText(`${v.APELLIDOS} ${v.NOMBRES} ${v.DNI}`)
                         };
                     });
@@ -1327,7 +1331,7 @@
                             
                             // SIEMPRE asignar vendedora (columna G del drive de ventas → columna J de la plantilla)
                             row['VENDEDORA'] = venta.ASESOR || '';
-                            row['MEDIO DE PAGO'] = venta.CONDICIONES || '';
+                            row['MEDIO DE PAGO'] = venta.TIPO_COMPROBANTE || ''; // ← Cambiado a TIPO_COMPROBANTE
                             
                             // Array para acumular observaciones
                             const observaciones = [];
@@ -1356,12 +1360,13 @@
                                 if (excedente > modaFinal * 0.20) { // Si pagó al menos 20% más
                                     // PAGO COMPLETO - Deducir que pagó el curso completo
                                     const cuotasDeducidas = modaCuotas; // Usar moda de cuotas calculada
-                                    const montoPorCuota = excedente / cuotasDeducidas;
+                                    // Redondear SIEMPRE HACIA ARRIBA con máximo 2 decimales
+                                    const montoPorCuota = Math.ceil((excedente / cuotasDeducidas) * 100) / 100;
                                     const porcentajeComision = 0.14;
                                     const fechaFormateada = formatearFechaExcel(venta.MARCA_TEMPORAL);
                                     
-                                    row['CUOTAS'] = cuotasDeducidas;
-                                    row['_cuotasCantidad'] = cuotasDeducidas;
+                                    row['CUOTAS'] = montoPorCuota; // ← Ahora muestra el MONTO por cuota, no la cantidad
+                                    row['_cuotasCantidad'] = cuotasDeducidas; // ← Mantener internamente para cálculos
                                     row['INSCRIPCIÓN'] = modaFinal; // Corregir inscripción a la moda
                                     
                                     for (let i = 1; i <= cuotasDeducidas; i++) {
@@ -1369,7 +1374,7 @@
                                         row[`C${i}_COD_REF`] = venta.COMPROBANTE;
                                         row[`C${i}_$`] = montoPorCuota;
                                         row[`C${i}_%`] = porcentajeComision;
-                                        row[`C${i}_NETO`] = montoPorCuota * (1 - porcentajeComision);
+                                        row[`C${i}_NETO`] = Math.ceil(montoPorCuota * (1 - porcentajeComision) * 100) / 100;
                                     }
                                     
                                     // OBSERVACIÓN: Pago completo deducido
@@ -1379,8 +1384,11 @@
                             } else if (infoCuotas.operaciones && infoCuotas.operaciones.length > 0) {
                                 // Hay información explícita de cuotas pendientes
                                 
-                                row['CUOTAS'] = numeroCuotas;
-                                row['_cuotasCantidad'] = numeroCuotas;
+                                // Calcular el monto promedio de las cuotas para mostrar en columna CUOTAS
+                                const montoPromedioCuota = montoCuota; // Ya calculado antes
+                                
+                                row['CUOTAS'] = montoPromedioCuota; // ← Ahora muestra el MONTO promedio, no la cantidad
+                                row['_cuotasCantidad'] = numeroCuotas; // ← Mantener internamente para cálculos
                                 
                                 const porcentajeComision = 0.14;
                                 
@@ -1399,7 +1407,7 @@
                                         row[`C${cuotaIndex}_COD_REF`] = '';
                                         row[`C${cuotaIndex}_$`] = operacion.monto;
                                         row[`C${cuotaIndex}_%`] = porcentajeComision;
-                                        row[`C${cuotaIndex}_NETO`] = operacion.monto * (1 - porcentajeComision);
+                                        row[`C${cuotaIndex}_NETO`] = Math.ceil(operacion.monto * (1 - porcentajeComision) * 100) / 100;
                                         cuotaIndex++;
                                     }
                                 });
@@ -1597,7 +1605,7 @@
                 for (let i = 1; i <= cuoShow; i++) h1.push(`C${i}`,'','','','');
                 data.push(h1);
                 
-                const h2 = ['Nº','ESTADO','OBSERVACIÓN','ID','APELLIDOS','NOMBRES','DNI','CELULAR','MAIL','','','',''];
+                const h2 = ['Nº','ESTADO','OBSERVACIÓN','ID','APELLIDOS','NOMBRES','DNI','CELULAR','MAIL','VENDEDORA','INSCRIPCIÓN','CUOTAS','MEDIO DE PAGO'];
                 for (let i = 1; i <= cuoShow; i++) h2.push('FECHA','CÓD REF','$','%','NETO');
                 data.push(h2);
                 
