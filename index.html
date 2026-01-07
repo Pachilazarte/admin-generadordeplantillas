@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Plantillas - ESCENCIAL CONSULTORA</title>
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    
+    <style>
+        :root {
+            --escencial-black: #000000;
+            --escencial-dark: #252525;
+            --escencial-gray: #c0c0c0;
+            --escencial-white: #ffffff;
+            --escencial-light: #faf1f1;
+            --escencial-navy-dark: #020f27;
+            --escencial-navy: #0b4a6e;
+            --escencial-cyan: #22d9df;
+            --escencial-cyan-light: #1effff;
+            --escencial-green: #6b9432;
+            --escencial-green-light: #c1ff72;
+            --excel-red: #CC0000;
+            --excel-teal: #134F5C;
+            --excel-orange: #E69138;
+            --excel-purple: #674EA7;
+            --excel-pink: #A64D79;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body {
+            height: 100%;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--escencial-dark);
+            position: relative;
+        }
+        
+        /* Fondo animado ESCENCIAL */
+        .bg {
+            animation: slide 3s ease-in-out infinite alternate;
+            background-image: linear-gradient(-60deg, var(--escencial-green) 50%, var(--escencial-cyan) 50%);
+            bottom: 0;
+            left: -50%;
+            opacity: 0.3;
+            position: fixed;
+            right: -50%;
+            top: 0;
+            z-index: -1;
+        }
+        
+        .bg2 {
+            animation-direction: alternate-reverse;
+            animation-duration: 4s;
+        }
+        
+        .bg3 {
+            animation-duration: 5s;
+        }
+        
+        @keyframes slide {
+            0% { transform: translateX(-25%); }
+            100% { transform: translateX(25%); }
+        }
+        
+        /* Overlay de gradiente */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--escencial-navy-dark) 0%, var(--escencial-navy) 50%, transparent 100%);
+            opacity: 0.7;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            min-height: calc(100vh - 80px);
+        }
+        
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .logo {
+            max-width: 250px;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-family: 'Catamaran', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--escencial-navy);
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--escencial-gray);
+            font-weight: 400;
+        }
+        
+        /* Card principal */
+        .main-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        
+        .upload-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .upload-box {
+            border: 3px dashed var(--escencial-cyan);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(34, 217, 223, 0.05), rgba(107, 148, 50, 0.05));
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .upload-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(34, 217, 223, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .upload-box:hover::before {
+            opacity: 1;
+        }
+        
+        .upload-box:hover {
+            border-color: var(--escencial-cyan-light);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(34, 217, 223, 0.3);
+        }
+        
+        .upload-box.has-file {
+            border-color: var(--escencial-green);
+            background: linear-gradient(135deg, rgba(107, 148, 50, 0.1), rgba(193, 255, 114, 0.1));
+        }
+        
+        .upload-box.has-file .upload-icon {
+            display: none;
+        }
+        
+        .upload-box.has-file::after {
+            content: attr(data-filename);
+            display: block;
+            font-size: 0.9rem;
+            color: var(--escencial-green);
+            font-weight: 600;
+            margin-top: 0.5rem;
+            word-break: break-all;
+        }
+        
+        .upload-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        }
+        
+        .upload-box h3 {
+            font-family: 'Catamaran', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--escencial-navy);
+            font-weight: 700;
+        }
+        
+        .upload-box p {
+            color: var(--escencial-gray);
+            font-size: 0.95rem;
+        }
+        
+        .upload-box input[type="file"] {
+            display: none;
+        }
+        
+        /* Botones */
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            font-family: 'Catamaran', sans-serif;
+            font-weight: 700;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--escencial-cyan), var(--escencial-cyan-light));
+            color: var(--escencial-navy);
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(34, 217, 223, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--escencial-green), var(--escencial-green-light));
+            color: white;
+        }
+        
+        .btn-success:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(107, 148, 50, 0.4);
+        }
+        
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .loading.active { display: block; }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            border: 4px solid rgba(34, 217, 223, 0.2);
+            border-top: 4px solid var(--escencial-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Vista previa */
+        .preview-section {
+            display: none;
+            margin-top: 2rem;
+        }
+        
+        .preview-section.active { display: block; }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(11, 74, 110, 0.1), rgba(34, 217, 223, 0.1));
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid rgba(34, 217, 223, 0.3);
+        }
+        
+        .stat-value {
+            font-family: 'Catamaran', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--escencial-navy);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--escencial-gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Alertas */
+        .alerts-toggle {
+            display: none;
+            background: linear-gradient(135deg, rgba(230, 145, 56, 0.1), rgba(230, 145, 56, 0.2));
+            border: 2px solid var(--excel-orange);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .alerts-toggle.active { display: block; }
+        
+        .alerts-toggle:hover {
+            background: linear-gradient(135deg, rgba(230, 145, 56, 0.15), rgba(230, 145, 56, 0.25));
+            transform: translateY(-2px);
+        }
+        
+        .alerts-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 600;
+            color: var(--escencial-navy);
+        }
+        
+        .alerts-content {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 2px solid rgba(230, 145, 56, 0.3);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .alerts-toggle.open .alerts-content {
+            display: block;
+        }
+        
+        .alert-item {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        /* Tabla */
+        .table-wrapper {
+            overflow: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-height: 600px;
+            position: relative;
+        }
+        
+        .table-wrapper::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+        
+        .table-wrapper::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: var(--escencial-cyan);
+            border-radius: 10px;
+        }
+        
+        .table-wrapper::-webkit-scrollbar-thumb:hover {
+            background: var(--escencial-navy);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            font-size: 0.85rem;
+        }
+        
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: white;
+        }
+        
+        th {
+            padding: 0.75rem 0.5rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid #ddd;
+        }
+        
+        td {
+            padding: 0.75rem 0.5rem;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+        
+        tbody tr:hover {
+            background-color: rgba(34, 217, 223, 0.05);
+        }
+        
+        /* Colores de columnas */
+        .col-estado { background-color: #d9ead3; color: #38761d; }
+        .col-obs { background-color: #fff2cc; color: #bf9000; }
+        .col-datos-personales { background-color: #cfe2f3; color: #0b5394; }
+        .col-venta { background-color: #ead1dc; color: #741b47; }
+        .col-c1 { background-color: #d9d2e9; color: #351c75; }
+        .col-c2 { background-color: #fce5cd; color: #b45f06; }
+        .col-c3 { background-color: #d0e0e3; color: #134f5c; }
+        .col-c4 { background-color: #f4cccc; color: #cc0000; }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: white;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+        
+        footer a {
+            color: var(--escencial-cyan);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        /* Modal de conversión de moneda */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-content h2 {
+            font-family: 'Catamaran', sans-serif;
+            color: var(--escencial-navy);
+            margin-bottom: 1rem;
+        }
+        
+        .modal-content p {
+            color: var(--escencial-gray);
+            margin-bottom: 2rem;
+        }
+        
+        .currency-input {
+            margin-bottom: 1.5rem;
+        }
+        
+        .currency-input label {
+            display: block;
+            font-weight: 600;
+            color: var(--escencial-navy);
+            margin-bottom: 0.5rem;
+        }
+        
+        .currency-input input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--escencial-cyan);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .currency-input input:focus {
+            outline: none;
+            border-color: var(--escencial-green);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .upload-section {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.95rem;
+            }
+            
+            .stat-value {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="bg bg2"></div>
+    <div class="bg bg3"></div>
+    
+    <div class="container">
+        <header>
+            <img src="./img/logo-escencial.png" alt="Logo Escencial" class="logo">
+            <h1>📊 Generador de Plantillas</h1>
+            <p class="subtitle">Sistema inteligente de procesamiento de datos · ESCENCIAL CONSULTORA</p>
+        </header>
+        
+        <div class="main-card">
+            <div class="upload-section">
+                <label for="alumnosFile" class="upload-box" id="alumnosBox">
+                    <div class="upload-icon">👥</div>
+                    <h3>Archivo de Alumnos</h3>
+                    <p>Arrastra o haz clic para seleccionar</p>
+                    <input type="file" id="alumnosFile" accept=".xlsx,.xls">
+                </label>
+                
+                <label for="ventasFile" class="upload-box" id="ventasBox">
+                    <div class="upload-icon">💰</div>
+                    <h3>Drive de Ventas</h3>
+                    <p>Arrastra o haz clic para seleccionar</p>
+                    <input type="file" id="ventasFile" accept=".xlsx,.xls">
+                </label>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" id="processBtn" disabled>
+                    ⚡ Procesar Archivos
+                </button>
+                <button class="btn" style="background: linear-gradient(135deg, #6c757d, #495057); color: white;" onclick="location.reload()">
+                    🔄 Refrescar Página
+                </button>
+            </div>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Procesando datos con lógica inteligente...</p>
+            </div>
+            
+            <div class="preview-section" id="preview-section">
+                <div class="stats" id="stats"></div>
+                
+                <div class="alerts-toggle" id="alerts-toggle" onclick="this.classList.toggle('open')">
+                    <div class="alerts-header">
+                        <span id="alerts-text"></span>
+                        <span>▼</span>
+                    </div>
+                    <div class="alerts-content" id="alerts-content"></div>
+                </div>
+                
+                <div class="table-wrapper" id="table-wrapper"></div>
+                
+                <div class="button-group">
+                    <button class="btn btn-success" onclick="downloadExcel()">
+                        ⬇️ Descargar Excel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Desarrollado con 💚 por <a href="https://escencial.com.ar" target="_blank">ESCENCIAL CONSULTORA</a></p>
+    </footer>
+    
+    <!-- Modal de conversión de moneda -->
+    <div id="currency-modal" class="modal">
+        <div class="modal-content">
+            <h2>💱 Conversión de Moneda Detectada</h2>
+            <p>Se detectaron pagos en moneda extranjera. Por favor, ingresa el valor actual de conversión:</p>
+            <div id="currency-inputs"></div>
+            <button class="btn btn-primary" onclick="confirmCurrency()">Confirmar y Continuar</button>
+        </div>
+    </div>
+    
+    <script>
+        let alumnosData = null;
+        let ventasData = null;
+        let processedData = [];
+        let alertsData = [];
+        
+        // Variables para conversión de moneda
+        let currencyRates = { USD: 0, BOB: 0 };
+        let detectedCurrencies = { USD: false, BOB: false };
+        
+        // Event listeners para archivos
+        document.getElementById('alumnosFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const uploadBox = document.getElementById('alumnosBox');
+                uploadBox.classList.add('has-file');
+                uploadBox.setAttribute('data-filename', `✅ ${file.name}`);
+                readExcelFile(file, 'alumnos');
+            }
+        });
+        
+        document.getElementById('ventasFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const uploadBox = document.getElementById('ventasBox');
+                uploadBox.classList.add('has-file');
+                uploadBox.setAttribute('data-filename', `✅ ${file.name}`);
+                readExcelFile(file, 'ventas');
+            }
+        });
+        
+        function readExcelFile(file, type) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, {type: 'array'});
+                const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(firstSheet, {defval: ''});
+                
+                if (type === 'alumnos') {
+                    alumnosData = jsonData;
+                } else {
+                    ventasData = jsonData;
+                }
+                
+                if (alumnosData && ventasData) {
+                    document.getElementById('processBtn').disabled = false;
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+        
+        document.getElementById('processBtn').addEventListener('click', preProcessFiles);
+        
+        function normalizeText(text) {
+            if (!text) return '';
+            return String(text).trim().toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                .replace(/\s+/g, ' ');
+        }
+        
+        function normalizeDNI(dni) {
+            if (!dni) return '';
+            return String(dni).replace(/\D/g, '');
+        }
+        
+        // FUNCIÓN: Detectar moneda extranjera
+        // Formato: Si el valor termina en .01 = USD, si termina en .07 = BOB (Peso Boliviano)
+        function detectCurrency(value) {
+            if (!value) return { currency: 'ARS', baseValue: 0 };
+            const str = String(value);
+            
+            // Detectar BOB (Peso Boliviano) - termina en .07
+            if (str.includes('.07')) {
+                const baseValue = parseFloat(str.replace('.07', ''));
+                return { currency: 'BOB', baseValue: baseValue };
+            }
+            
+            // Detectar USD (Dólar) - termina en .01
+            if (str.includes('.01')) {
+                const baseValue = parseFloat(str.replace('.01', ''));
+                return { currency: 'USD', baseValue: baseValue };
+            }
+            
+            // Si no tiene marcador, es ARS (Pesos Argentinos)
+            const numValue = parseFloat(String(value).replace(/[^0-9.]/g, ''));
+            return { currency: 'ARS', baseValue: numValue || 0 };
+        }
+        
+        // FUNCIÓN: Convertir a ARS usando las tasas ingresadas
+        function convertToARS(baseValue, currency) {
+            if (currency === 'USD') return Math.round(baseValue * currencyRates.USD);
+            else if (currency === 'BOB') return Math.round(baseValue * currencyRates.BOB);
+            return baseValue;
+        }
+        
+        // FUNCIÓN: Pre-procesar archivos para detectar monedas extranjeras
+        function preProcessFiles() {
+            detectedCurrencies = { USD: false, BOB: false };
+            
+            // Buscar en todos los valores de ventas
+            ventasData.forEach(venta => {
+                const valorPagado = detectCurrency(venta['VALOR PAGADO']);
+                if (valorPagado.currency === 'USD') detectedCurrencies.USD = true;
+                if (valorPagado.currency === 'BOB') detectedCurrencies.BOB = true;
+            });
+            
+            // Si se detectaron monedas extranjeras, mostrar modal
+            if (detectedCurrencies.USD || detectedCurrencies.BOB) {
+                console.log('💱 Monedas detectadas:', detectedCurrencies);
+                showCurrencyModal();
+            } else {
+                // Si no hay monedas extranjeras, procesar directamente
+                processData();
+            }
+        }
+        
+        // FUNCIÓN: Mostrar modal de conversión
+        function showCurrencyModal() {
+            const modal = document.getElementById('currency-modal');
+            const inputsContainer = document.getElementById('currency-inputs');
+            
+            let html = '';
+            if (detectedCurrencies.BOB) {
+                html += `
+                    <div class="currency-input">
+                        <label>💵 1 BOB (Peso Boliviano) = cuántos ARS?</label>
+                        <input type="number" id="rate-bob" placeholder="Ejemplo: 175" step="0.01" required>
+                    </div>
+                `;
+            }
+            if (detectedCurrencies.USD) {
+                html += `
+                    <div class="currency-input">
+                        <label>💵 1 USD (Dólar) = cuántos ARS?</label>
+                        <input type="number" id="rate-usd" placeholder="Ejemplo: 1200" step="0.01" required>
+                    </div>
+                `;
+            }
+            
+            inputsContainer.innerHTML = html;
+            modal.classList.add('active');
+        }
+        
+        // FUNCIÓN: Confirmar tasas de conversión
+        function confirmCurrency() {
+            if (detectedCurrencies.BOB) {
+                const bobRate = parseFloat(document.getElementById('rate-bob').value);
+                if (!bobRate || bobRate <= 0) {
+                    alert('Por favor ingresa un valor válido para BOB');
+                    return;
+                }
+                currencyRates.BOB = bobRate;
+                console.log(`✅ Tasa BOB: 1 BOB = ${bobRate} ARS`);
+            }
+            
+            if (detectedCurrencies.USD) {
+                const usdRate = parseFloat(document.getElementById('rate-usd').value);
+                if (!usdRate || usdRate <= 0) {
+                    alert('Por favor ingresa un valor válido para USD');
+                    return;
+                }
+                currencyRates.USD = usdRate;
+                console.log(`✅ Tasa USD: 1 USD = ${usdRate} ARS`);
+            }
+            
+            document.getElementById('currency-modal').classList.remove('active');
+            processData();
+        }
+        
+        // NUEVA FUNCIÓN: Convertir fecha de Excel a formato legible
+        function formatearFechaExcel(fechaValor) {
+            if (!fechaValor) return '';
+            
+            // Si ya es una fecha válida en formato string, devolverla
+            if (typeof fechaValor === 'string' && fechaValor.includes('-')) {
+                try {
+                    const fecha = new Date(fechaValor);
+                    if (!isNaN(fecha.getTime())) {
+                        const dia = String(fecha.getDate()).padStart(2, '0');
+                        const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+                        const anio = fecha.getFullYear();
+                        return `${dia}/${mes}/${anio}`;
+                    }
+                } catch (e) {
+                    return String(fechaValor);
+                }
+            }
+            
+            // Si es un número (serial de Excel), convertirlo
+            if (typeof fechaValor === 'number' || !isNaN(fechaValor)) {
+                const serialDate = parseFloat(fechaValor);
+                // Excel serial: días desde 1900-01-01
+                const excelEpoch = new Date(1899, 11, 30); // 30 dic 1899
+                const fecha = new Date(excelEpoch.getTime() + serialDate * 86400000);
+                
+                if (!isNaN(fecha.getTime())) {
+                    const dia = String(fecha.getDate()).padStart(2, '0');
+                    const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+                    const anio = fecha.getFullYear();
+                    return `${dia}/${mes}/${anio}`;
+                }
+            }
+            
+            return String(fechaValor);
+        }
+        
+        // NUEVA FUNCIÓN: Calcular la MODA (valor más frecuente) de pagos
+        function calcularModaPagos(ventas) {
+            const frecuencias = {};
+            ventas.forEach(v => {
+                const valor = v.VALOR_PAGADO || 0; // Ya viene convertido a ARS
+                if (valor > 0) {
+                    frecuencias[valor] = (frecuencias[valor] || 0) + 1;
+                }
+            });
+            
+            let moda = 0;
+            let maxFrecuencia = 0;
+            for (const [valor, frecuencia] of Object.entries(frecuencias)) {
+                if (frecuencia > maxFrecuencia) {
+                    maxFrecuencia = frecuencia;
+                    moda = parseFloat(valor);
+                }
+            }
+            
+            console.log(`🎯 MODA CALCULADA (Inscripción): $${moda} (aparece ${maxFrecuencia} veces)`);
+            return moda;
+        }
+        
+        function processData() {
+            document.getElementById('loading').classList.add('active');
+            processedData = [];
+            alertsData = [];
+            
+            setTimeout(() => {
+                try {
+                    // Normalizar alumnos
+                    const alumnos = alumnosData.map(a => ({
+                        ID: a.ID || '',
+                        APELLIDOS: (a.Apellido || '').trim(),
+                        NOMBRES: (a.Nombre || '').trim(),
+                        DNI: normalizeDNI(a.DNI),
+                        CELULAR: String(a.Celular || '').trim(), // Copia literal del celular
+                        MAIL: (a.Email || '').trim(),
+                        _searchKey: normalizeText(`${a.Apellido} ${a.Nombre} ${a.DNI}`)
+                    }));
+                    
+                    // Crear conjunto de DNIs de alumnos
+                    const alumnosDNIs = new Set(alumnos.map(a => normalizeText(a.DNI)));
+                    
+                    // NUEVA FUNCIÓN MEJORADA: Parsear información de cuotas desde VALOR PENDIENTE
+                    // Maneja todos los patrones posibles: "x", "por", "*", "y", "+", ",", números solos, etc.
+                    function parsearCuotas(valorPendienteStr) {
+                        if (!valorPendienteStr) return { operaciones: [], totalCuotas: 0 };
+                        
+                        const original = String(valorPendienteStr).trim();
+                        
+                        // GRUPO 4: Estado "Paz y Salvo" (ya pagó todo o no debe nada)
+                        const estadosPazYSalvo = ['-', '.', '0', 'ok', 'saldado', 'listo', 'pagado', 'completo'];
+                        if (estadosPazYSalvo.includes(original.toLowerCase()) || original === '') {
+                            return { operaciones: [], totalCuotas: 0, pazYSalvo: true };
+                        }
+                        
+                        // Limpiar: quitar $, puntos de miles, paréntesis, texto irrelevante
+                        let str = original
+                            .replace(/\$/g, '')
+                            .replace(/\./g, '') // Quitar puntos de miles
+                            .replace(/\([^)]*\)/g, '') // Quitar texto entre paréntesis
+                            .replace(/\b(abono|resto|pago|cuota|cuotas|de|del|fecha|día)\b/gi, '') // Quitar palabras comunes
+                            .trim();
+                        
+                        // GRUPO 2: Operaciones Múltiples - dividir por separadores
+                        const separadores = [' y ', ' Y ', ' + ', ' , ', ','];
+                        let operacionesStr = [str];
+                        
+                        for (const sep of separadores) {
+                            const nuevasOps = [];
+                            operacionesStr.forEach(op => {
+                                if (op.includes(sep)) {
+                                    nuevasOps.push(...op.split(sep).map(s => s.trim()));
+                                } else {
+                                    nuevasOps.push(op);
+                                }
+                            });
+                            operacionesStr = nuevasOps;
+                        }
+                        
+                        const operaciones = [];
+                        
+                        // Procesar cada operación individual
+                        operacionesStr.forEach(opStr => {
+                            if (!opStr || opStr.length === 0) return;
+                            
+                            // GRUPO 1: Operaciones con "X", "x", "por", "*"
+                            const patronesX = [
+                                /(\d+)\s*[xX*]\s*(\d+)/,  // "55930 x 1", "79900x1", "48500*2"
+                                /(\d+)\s+por\s+(\d+)/i,   // "50000 por 2"
+                                /(\d+)\s+cuotas?\s+(?:de\s+)?(\d+)/i // "2 cuotas de 50000"
+                            ];
+                            
+                            let matchEncontrado = false;
+                            
+                            for (const patron of patronesX) {
+                                const match = opStr.match(patron);
+                                if (match) {
+                                    const num1 = parseInt(match[1]);
+                                    const num2 = parseInt(match[2]);
+                                    
+                                    // El número más grande es el monto, el más pequeño es la cantidad de cuotas
+                                    let monto, cuotas;
+                                    if (num1 > num2) {
+                                        monto = num1;
+                                        cuotas = num2;
+                                    } else {
+                                        monto = num2;
+                                        cuotas = num1;
+                                    }
+                                    
+                                    // Validación: si el "monto" es menor a 1000, probablemente es un error decimal
+                                    if (monto < 1000) {
+                                        console.warn(`⚠️ Posible error decimal: ${original} → Monto=${monto}`);
+                                        monto = monto * 1000; // Asumimos que falta un cero
+                                    }
+                                    
+                                    operaciones.push({ monto, cuotas });
+                                    matchEncontrado = true;
+                                    break;
+                                }
+                            }
+                            
+                            if (matchEncontrado) return;
+                            
+                            // GRUPO 5: Errores - terminaciones incompletas
+                            if (opStr.match(/(\d+)\s*[xX*]\s*$/)) {
+                                // "50000x" - falta la cuota
+                                const monto = parseInt(opStr.match(/(\d+)/)[1]);
+                                operaciones.push({ monto, cuotas: 1 });
+                                console.warn(`⚠️ Formato incompleto (falta cuota): ${original} → asumiendo 1 cuota`);
+                                return;
+                            }
+                            
+                            if (opStr.match(/^\s*[xX*]\s*(\d+)/)) {
+                                // "x2" - falta el monto
+                                const cuotas = parseInt(opStr.match(/(\d+)/)[1]);
+                                console.error(`❌ ERROR: Falta el monto en "${original}". Solo se encontró ${cuotas} cuota(s).`);
+                                operaciones.push({ monto: 0, cuotas, error: true });
+                                return;
+                            }
+                            
+                            // GRUPO 3: Valores Implícitos - solo un número
+                            const soloNumero = opStr.match(/^(\d+)$/);
+                            if (soloNumero) {
+                                const monto = parseInt(soloNumero[1]);
+                                operaciones.push({ monto, cuotas: 1 });
+                                return;
+                            }
+                            
+                            // Si llegamos aquí, el formato no se reconoció
+                            console.warn(`⚠️ Formato no reconocido: "${original}"`);
+                        });
+                        
+                        // Calcular total de cuotas
+                        const totalCuotas = operaciones.reduce((sum, op) => sum + op.cuotas, 0);
+                        
+                        return { operaciones, totalCuotas, original };
+                    }
+                    
+                    // Normalizar ventas
+                    const ventas = ventasData.map(v => {
+                        const infoCuotas = parsearCuotas(v['VALOR PENDIENTE']);
+                        
+                        // CONVERTIR VALOR PAGADO si está en moneda extranjera
+                        const valorPagadoDeteccion = detectCurrency(v['VALOR PAGADO']);
+                        const valorPagadoARS = convertToARS(valorPagadoDeteccion.baseValue, valorPagadoDeteccion.currency);
+                        
+                        // Log si hubo conversión
+                        if (valorPagadoDeteccion.currency !== 'ARS') {
+                            console.log(`💱 Conversión: ${v['APELLIDOS']} pagó ${valorPagadoDeteccion.baseValue} ${valorPagadoDeteccion.currency} = ${valorPagadoARS} ARS`);
+                        }
+                        
+                        // Calcular monto promedio de cuota y número total de cuotas
+                        let montoCuotaPromedio = 0;
+                        let numeroCuotasTotal = infoCuotas.totalCuotas;
+                        
+                        if (infoCuotas.operaciones && infoCuotas.operaciones.length > 0) {
+                            const montoTotal = infoCuotas.operaciones.reduce((sum, op) => sum + (op.monto * op.cuotas), 0);
+                            montoCuotaPromedio = numeroCuotasTotal > 0 ? montoTotal / numeroCuotasTotal : 0;
+                        }
+                        
+                        return {
+                            DNI: normalizeDNI(v.DNI),
+                            NOMBRES: (v.NOMBRES || '').trim(),
+                            APELLIDOS: (v.APELLIDOS || '').trim(),
+                            MARCA_TEMPORAL: v['Marca temporal'] || '',
+                            VALOR_PAGADO: valorPagadoARS, // ← Ya convertido a ARS
+                            VALOR_PAGADO_ORIGINAL: valorPagadoDeteccion.baseValue,
+                            MONEDA_ORIGINAL: valorPagadoDeteccion.currency,
+                            VALOR_PENDIENTE_STR: String(v['VALOR PENDIENTE'] || '').trim(),
+                            INFO_CUOTAS: infoCuotas,
+                            MONTO_CUOTA: montoCuotaPromedio,
+                            NUMERO_CUOTAS: numeroCuotasTotal,
+                            COMPROBANTE: v['COMPROBANTE'] || '',
+                            ASESOR: (v.ASESOR || '').trim(),
+                            CONCEPTO: (v['CONCEPTO PAGADO'] || '').trim(),
+                            CONDICIONES: (v['CONDICIONES DE PAGO:'] || '').trim(),
+                            _searchKey: normalizeText(`${v.APELLIDOS} ${v.NOMBRES} ${v.DNI}`)
+                        };
+                    });
+                    
+                    // CALCULAR MODA usando valores YA CONVERTIDOS a ARS
+                    const modaInscripcion = calcularModaPagos(ventas);
+                    
+                    // Procesar cada alumno
+                    alumnos.forEach((alumno, index) => {
+                        const venta = ventas.find(v => normalizeDNI(v.DNI) === normalizeDNI(alumno.DNI));
+                        
+                        let row = {
+                            'Nº': index + 1,
+                            'ESTADO': '',
+                            'OBSERVACIÓN': '',
+                            'ID': alumno.ID,
+                            'APELLIDOS': alumno.APELLIDOS,
+                            'NOMBRES': alumno.NOMBRES,
+                            'DNI': alumno.DNI,
+                            'CELULAR': alumno.CELULAR,
+                            'MAIL': alumno.MAIL,
+                            'VENDEDORA': '',
+                            'INSCRIPCIÓN': 0,
+                            'CUOTAS': 0,
+                            'MEDIO DE PAGO': '',
+                            '_cuotasCantidad': 0
+                        };
+                        
+                        // Inicializar columnas de cuotas (vacías por defecto)
+                        for (let i = 1; i <= 4; i++) {
+                            row[`C${i}_FECHA`] = '';
+                            row[`C${i}_COD_REF`] = '';
+                            row[`C${i}_$`] = '';
+                            row[`C${i}_%`] = '';
+                            row[`C${i}_NETO`] = 0;
+                        }
+                        
+                        if (venta) {
+                            const valorPagado = venta.VALOR_PAGADO; // Ya está en ARS (convertido)
+                            const montoCuota = venta.MONTO_CUOTA;
+                            const numeroCuotas = venta.NUMERO_CUOTAS;
+                            const infoCuotas = venta.INFO_CUOTAS;
+                            
+                            console.log(`💰 ${alumno.APELLIDOS}: Valor Pagado = ${valorPagado} ARS${venta.MONEDA_ORIGINAL !== 'ARS' ? ` (convertido desde ${venta.VALOR_PAGADO_ORIGINAL} ${venta.MONEDA_ORIGINAL})` : ''}`);
+                            
+                            // DETECCIÓN MEJORADA DE BECADOS
+                            // 1. Por palabra clave en CONCEPTO PAGADO
+                            const conceptoLower = (venta.CONCEPTO || '').toLowerCase();
+                            const esBecadoPorConcepto = conceptoLower.includes('beca') || 
+                                                        conceptoLower.includes('becado') || 
+                                                        conceptoLower.includes('becada');
+                            
+                            // 2. Por patrones en VALOR PAGADO o VALOR PENDIENTE (sin monto detectable)
+                            const patronesBeca = ['-', '.', 'beca', 'becado', 'becada', 'ok', 'saldado', 'listo', ''];
+                            
+                            // Usar el valor ORIGINAL (antes de conversión) para detectar patrones de texto
+                            const valorPagadoOriginalStr = String(venta.VALOR_PAGADO_ORIGINAL || '').toLowerCase().trim();
+                            const valorPendienteStr = (venta.VALOR_PENDIENTE_STR || '').toLowerCase().trim();
+                            
+                            const esBecadoPorValorPagado = patronesBeca.includes(valorPagadoOriginalStr) || 
+                                                          valorPagadoOriginalStr.includes('beca') ||
+                                                          valorPagado === 0 ||
+                                                          isNaN(valorPagado);
+                            
+                            const esBecadoPorValorPendiente = patronesBeca.includes(valorPendienteStr) || 
+                                                             valorPendienteStr.includes('beca');
+                            
+                            // 3. Por falta de montos detectables en AMBOS campos (F y K)
+                            const sinMontoDetectable = (valorPagado === 0 || isNaN(valorPagado)) && 
+                                                      (infoCuotas.pazYSalvo || numeroCuotas === 0);
+                            
+                            // Un alumno es BECADO si cumple CUALQUIERA de estas condiciones
+                            const esBecado = esBecadoPorConcepto || esBecadoPorValorPagado || 
+                                           (esBecadoPorValorPendiente && sinMontoDetectable);
+                            
+                            if (esBecado) {
+                                row['ESTADO'] = 'BECADO';
+                                row['OBSERVACIÓN'] = '🎓 Alumno becado';
+                                
+                                // Determinar razón de la detección para el log
+                                let razon = '';
+                                if (esBecadoPorConcepto) razon = 'concepto';
+                                else if (esBecadoPorValorPagado) razon = 'valor pagado';
+                                else if (esBecadoPorValorPendiente) razon = 'valor pendiente';
+                                else if (sinMontoDetectable) razon = 'sin montos detectables';
+                                
+                                console.log(`🎓 BECADO DETECTADO (${razon}): ${alumno.APELLIDOS} ${alumno.NOMBRES}`);
+                                
+                                alertsData.push({
+                                    tipo: 'becado',
+                                    mensaje: `🎓 BECADO: ${alumno.APELLIDOS} ${alumno.NOMBRES} (DNI: ${alumno.DNI}) - Razón: ${razon}`
+                                });
+                            } else {
+                                row['ESTADO'] = 'ACTIVO';
+                                row['OBSERVACIÓN'] = ''; // Inicializar vacío
+                            }
+                            
+                            // SIEMPRE asignar vendedora (columna G del drive de ventas → columna J de la plantilla)
+                            row['VENDEDORA'] = venta.ASESOR || '';
+                            row['MEDIO DE PAGO'] = venta.CONDICIONES || '';
+                            
+                            // Array para acumular observaciones
+                            const observaciones = [];
+                            
+                            // Si hubo conversión de moneda, agregarlo a observaciones
+                            if (venta.MONEDA_ORIGINAL !== 'ARS') {
+                                const tasaUsada = venta.MONEDA_ORIGINAL === 'USD' ? currencyRates.USD : currencyRates.BOB;
+                                observaciones.push(`💱 Pago en ${venta.MONEDA_ORIGINAL}: ${venta.VALOR_PAGADO_ORIGINAL} ${venta.MONEDA_ORIGINAL} = ${valorPagado.toLocaleString('es-AR')} ARS (tasa: ${tasaUsada})`);
+                            }
+                            
+                            // NUEVA LÓGICA: Detección inteligente basada en coherencia inscripción-cuotas
+                            // La inscripción SIEMPRE es el valor pagado (puede ser más o menos que la moda)
+                            // Si pagó más o menos que la moda, el ajuste se refleja en las cuotas
+                            
+                            row['INSCRIPCIÓN'] = valorPagado;
+                            
+                            // Verificar si es "Paz y Salvo" (ya pagó todo)
+                            if (infoCuotas.pazYSalvo) {
+                                console.log(`✅ PAZ Y SALVO: ${alumno.APELLIDOS} - Valor Pendiente: "${venta.VALOR_PENDIENTE_STR}" → Ya pagó todo`);
+                                
+                                // Calcular cuotas retroactivamente
+                                // Si pagó significativamente más que la moda, asumimos que pagó inscripción + cuotas
+                                const totalPagado = valorPagado;
+                                const excedente = totalPagado - modaInscripcion;
+                                
+                                if (excedente > modaInscripcion * 0.20) { // Si pagó al menos 20% más
+                                    // PAGO COMPLETO - Deducir que pagó el curso completo
+                                    const cuotasDeducidas = 2; // Por defecto 2 cuotas (lo más común)
+                                    const montoPorCuota = excedente / cuotasDeducidas;
+                                    const porcentajeComision = 0.14;
+                                    const fechaFormateada = formatearFechaExcel(venta.MARCA_TEMPORAL);
+                                    
+                                    row['CUOTAS'] = cuotasDeducidas;
+                                    row['_cuotasCantidad'] = cuotasDeducidas;
+                                    row['INSCRIPCIÓN'] = modaInscripcion; // Corregir inscripción a la moda
+                                    
+                                    for (let i = 1; i <= cuotasDeducidas; i++) {
+                                        row[`C${i}_FECHA`] = fechaFormateada;
+                                        row[`C${i}_COD_REF`] = venta.COMPROBANTE;
+                                        row[`C${i}_$`] = montoPorCuota;
+                                        row[`C${i}_%`] = porcentajeComision;
+                                        row[`C${i}_NETO`] = montoPorCuota * (1 - porcentajeComision);
+                                    }
+                                    
+                                    // OBSERVACIÓN: Pago completo deducido
+                                    observaciones.push(`✅ Pagó curso completo ($${totalPagado.toLocaleString('es-AR')}). Moda inscripción: $${modaInscripcion.toLocaleString('es-AR')}. ${cuotasDeducidas} cuotas deducidas de $${montoPorCuota.toLocaleString('es-AR')} c/u`);
+                                }
+                                
+                            } else if (infoCuotas.operaciones && infoCuotas.operaciones.length > 0) {
+                                // Hay información explícita de cuotas pendientes
+                                
+                                row['CUOTAS'] = numeroCuotas;
+                                row['_cuotasCantidad'] = numeroCuotas;
+                                
+                                const porcentajeComision = 0.14;
+                                
+                                // Distribuir las operaciones de cuotas en las columnas
+                                let cuotaIndex = 1;
+                                
+                                infoCuotas.operaciones.forEach(operacion => {
+                                    if (operacion.error) {
+                                        observaciones.push('⚠️ Error: falta monto en cuota');
+                                        return;
+                                    }
+                                    
+                                    for (let i = 0; i < operacion.cuotas && cuotaIndex <= 4; i++) {
+                                        // Las cuotas están PENDIENTES (no llevan fecha ni referencia)
+                                        row[`C${cuotaIndex}_FECHA`] = '';
+                                        row[`C${cuotaIndex}_COD_REF`] = '';
+                                        row[`C${cuotaIndex}_$`] = operacion.monto;
+                                        row[`C${cuotaIndex}_%`] = porcentajeComision;
+                                        row[`C${cuotaIndex}_NETO`] = operacion.monto * (1 - porcentajeComision);
+                                        cuotaIndex++;
+                                    }
+                                });
+                                
+                                console.log(`📋 CUOTAS PENDIENTES: ${alumno.APELLIDOS} - Inscripción: $${valorPagado}, ${numeroCuotas} cuota(s) pendiente(s)`);
+                                
+                                // Si pagó diferente a la moda en inscripción, agregar nota
+                                const diferenciaInscripcion = valorPagado - modaInscripcion;
+                                if (Math.abs(diferenciaInscripcion) > 100) {
+                                    if (diferenciaInscripcion > 0) {
+                                        observaciones.push(`💰 Inscripción: Pagó $${diferenciaInscripcion.toLocaleString('es-AR')} más que moda ($${modaInscripcion.toLocaleString('es-AR')}). Total inscripción: $${valorPagado.toLocaleString('es-AR')}. Diferencia ajustada en cuotas`);
+                                    } else {
+                                        observaciones.push(`💰 Inscripción: Pagó $${Math.abs(diferenciaInscripcion).toLocaleString('es-AR')} menos que moda ($${modaInscripcion.toLocaleString('es-AR')}). Total inscripción: $${valorPagado.toLocaleString('es-AR')}. Diferencia ajustada en cuotas`);
+                                    }
+                                }
+                                
+                                // Verificar si pagó cuotas adelantadas
+                                const totalCuotasEsperado = infoCuotas.operaciones.reduce((sum, op) => sum + (op.monto * op.cuotas), 0);
+                                if (totalCuotasEsperado > 0) {
+                                    // Calcular si pagó más de lo esperado en cuotas
+                                    const totalEsperadoCurso = modaInscripcion + totalCuotasEsperado;
+                                    if (valorPagado > totalEsperadoCurso) {
+                                        const adelanto = valorPagado - modaInscripcion;
+                                        observaciones.push(`⚡ Adelantó cuotas: Pagó $${adelanto.toLocaleString('es-AR')} extra. Se distribuyó en ${numeroCuotas} cuota(s) según valor pendiente`);
+                                    }
+                                }
+                                
+                            } else {
+                                // No hay información de cuotas o formato no reconocido
+                                console.log(`⚠️ SIN INFO CUOTAS: ${alumno.APELLIDOS} - Inscripción: $${valorPagado}, Pendiente: "${venta.VALOR_PENDIENTE_STR}"`);
+                                
+                                if (venta.VALOR_PENDIENTE_STR && venta.VALOR_PENDIENTE_STR !== '' && venta.VALOR_PENDIENTE_STR !== '0') {
+                                    observaciones.push(`⚠️ Formato valor pendiente no reconocido: "${venta.VALOR_PENDIENTE_STR}"`);
+                                }
+                            }
+                            
+                            // Asignar observaciones solo si hay algo relevante
+                            if (!esBecado && observaciones.length > 0) {
+                                row['OBSERVACIÓN'] = observaciones.join(' | ');
+                            }
+                        } else {
+                            // Sin venta
+                            row['ESTADO'] = 'SIN VENTA';
+                            row['OBSERVACIÓN'] = 'Sin registro de venta';
+                        }
+                        
+                        processedData.push(row);
+                    });
+                    
+                    // Detectar ventas mal cargadas (en VENTAS pero no en ALUMNOS)
+                    ventasData.forEach(v => {
+                        const dniNorm = normalizeText(normalizeDNI(v.DNI));
+                        if (!alumnosDNIs.has(dniNorm)) {
+                            alertsData.push({
+                                tipo: 'mal_cargado',
+                                mensaje: `❌ MAL CARGADO: DNI ${v.DNI} (${v.APELLIDOS} ${v.NOMBRES}) está en VENTAS pero NO en ALUMNOS`
+                            });
+                        }
+                    });
+                    
+                    // ORDENAR ALFABÉTICAMENTE por APELLIDOS y NOMBRES
+                    processedData.sort((a, b) => {
+                        const comparacionApellidos = a.APELLIDOS.localeCompare(b.APELLIDOS, 'es');
+                        if (comparacionApellidos !== 0) return comparacionApellidos;
+                        return a.NOMBRES.localeCompare(b.NOMBRES, 'es');
+                    });
+                    
+                    // Re-numerar después de ordenar
+                    processedData.forEach((row, index) => {
+                        row['Nº'] = index + 1;
+                    });
+                    
+                    document.getElementById('loading').classList.remove('active');
+                    displayPreview();
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Error: ' + error.message);
+                    document.getElementById('loading').classList.remove('active');
+                }
+            }, 500);
+        }
+        
+        function displayPreview() {
+            const total = processedData.length;
+            const conVentas = processedData.filter(r => r.INSCRIPCIÓN > 0).length;
+            const totalInsc = processedData.reduce((s, r) => s + (r.INSCRIPCIÓN || 0), 0);
+            
+            let totalCuot = 0;
+            let totalCuotNeto = 0;
+            
+            processedData.forEach(r => {
+                for (let i = 1; i <= 4; i++) {
+                    totalCuot += parseFloat(r[`C${i}_$`] || 0);
+                    totalCuotNeto += parseFloat(r[`C${i}_NETO`] || 0);
+                }
+            });
+            
+            document.getElementById('stats').innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-value">${total}</div>
+                    <div class="stat-label">Total Registros</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">${conVentas}</div>
+                    <div class="stat-label">Con Ventas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$${totalInsc.toLocaleString('es-AR')}</div>
+                    <div class="stat-label">Total Inscripciones</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$${totalCuot.toLocaleString('es-AR')}</div>
+                    <div class="stat-label">Total Cuotas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$${totalCuotNeto.toLocaleString('es-AR')}</div>
+                    <div class="stat-label">Total Cuotas Neto</div>
+                </div>
+            `;
+            
+            if (alertsData.length > 0) {
+                const becadosCount = alertsData.filter(a => a.tipo === 'becado').length;
+                const malCargadosCount = alertsData.filter(a => a.tipo === 'mal_cargado').length;
+                
+                // Solo mostrar alertas si hay becados o mal cargados
+                if (becadosCount > 0 || malCargadosCount > 0) {
+                    let alertText = '⚠️ Alertas Importantes (';
+                    let parts = [];
+                    if (becadosCount > 0) parts.push(`${becadosCount} becado${becadosCount > 1 ? 's' : ''}`);
+                    if (malCargadosCount > 0) parts.push(`${malCargadosCount} mal cargado${malCargadosCount > 1 ? 's' : ''}`);
+                    alertText += parts.join(', ') + ')';
+                    
+                    document.getElementById('alerts-text').textContent = alertText;
+                    
+                    let alertsHTML = '';
+                    alertsData.forEach(alert => {
+                        alertsHTML += `<div class="alert-item"><strong>${alert.mensaje}</strong></div>`;
+                    });
+                    document.getElementById('alerts-content').innerHTML = alertsHTML;
+                    document.getElementById('alerts-toggle').classList.add('active');
+                }
+            }
+            
+            const maxC = Math.max(...processedData.map(r => r._cuotasCantidad || 0));
+            const cuoShow = Math.max(maxC, 1);
+            
+            let html = '<table><thead><tr>';
+            html += '<th rowspan="2" class="col-estado">Nº</th><th rowspan="2" class="col-estado">ESTADO</th><th rowspan="2" class="col-obs">OBS</th>';
+            html += '<th colspan="6" class="col-datos-personales">DATOS PERSONALES</th><th colspan="4" class="col-venta">VENTA</th>';
+            
+            const cols = ['col-c1','col-c2','col-c3','col-c4'];
+            for (let i = 0; i < cuoShow; i++) {
+                html += `<th colspan="5" class="${cols[i]}">C${i+1}</th>`;
+            }
+            
+            html += '</tr><tr><th class="col-datos-personales">ID</th><th class="col-datos-personales">APELLIDOS</th>';
+            html += '<th class="col-datos-personales">NOMBRES</th><th class="col-datos-personales">DNI</th>';
+            html += '<th class="col-datos-personales">CELULAR</th><th class="col-datos-personales">MAIL</th>';
+            html += '<th class="col-venta">VENDEDORA</th><th class="col-venta">INSCRIPCIÓN</th><th class="col-venta">CUOTAS</th><th class="col-venta">MEDIO PAGO</th>';
+            
+            for (let i = 0; i < cuoShow; i++) {
+                html += `<th class="${cols[i]}">FECHA</th><th class="${cols[i]}">CÓD REF</th>`;
+                html += `<th class="${cols[i]}">$</th><th class="${cols[i]}">%</th><th class="${cols[i]}">NETO</th>`;
+            }
+            html += '</tr></thead><tbody>';
+            
+            processedData.slice(0, 50).forEach(r => {
+                html += '<tr>';
+                html += `<td>${r['Nº']}</td><td>${r['ESTADO']}</td><td>${r['OBSERVACIÓN']}</td>`;
+                html += `<td>${r['ID']}</td><td>${r['APELLIDOS']}</td><td>${r['NOMBRES']}</td>`;
+                html += `<td>${r['DNI']}</td><td>${r['CELULAR']}</td><td>${r['MAIL']}</td>`;
+                html += `<td>${r['VENDEDORA']}</td><td>${r['INSCRIPCIÓN']}</td><td>${r['CUOTAS']}</td><td>${r['MEDIO DE PAGO']}</td>`;
+                
+                for (let i = 1; i <= cuoShow; i++) {
+                    html += `<td>${r[`C${i}_FECHA`]||''}</td><td>${r[`C${i}_COD_REF`]||''}</td>`;
+                    html += `<td>${r[`C${i}_$`]||''}</td><td>${r[`C${i}_%`]||''}</td><td>${r[`C${i}_NETO`]||0}</td>`;
+                }
+                html += '</tr>';
+            });
+            
+            html += '</tbody></table>';
+            document.getElementById('table-wrapper').innerHTML = html;
+            document.getElementById('preview-section').classList.add('active');
+        }
+        
+        function downloadExcel() {
+            try {
+                const wb = XLSX.utils.book_new();
+                const data = [];
+                
+                const maxC = Math.max(...processedData.map(r => r._cuotasCantidad || 0));
+                const cuoShow = Math.max(maxC, 1);
+                
+                const h1 = ['','','','DATOS PERSONALES','','','','','','VENDEDORA','INSCRIPCIÓN','CUOTAS','MEDIO DE PAGO'];
+                for (let i = 1; i <= cuoShow; i++) h1.push(`C${i}`,'','','','');
+                data.push(h1);
+                
+                const h2 = ['Nº','ESTADO','OBSERVACIÓN','ID','APELLIDOS','NOMBRES','DNI','CELULAR','MAIL','','','',''];
+                for (let i = 1; i <= cuoShow; i++) h2.push('FECHA','CÓD REF','$','%','NETO');
+                data.push(h2);
+                
+                processedData.forEach(r => {
+                    const row = [r['Nº'],r['ESTADO'],r['OBSERVACIÓN'],r['ID'],r['APELLIDOS'],r['NOMBRES'],
+                                 r['DNI'],r['CELULAR'],r['MAIL'],r['VENDEDORA'],r['INSCRIPCIÓN'],r['CUOTAS'],r['MEDIO DE PAGO']];
+                    for (let i = 1; i <= cuoShow; i++) {
+                        row.push(r[`C${i}_FECHA`]||'',r[`C${i}_COD_REF`]||'',r[`C${i}_$`]||'',r[`C${i}_%`]||'',r[`C${i}_NETO`]||0);
+                    }
+                    data.push(row);
+                });
+                
+                const ws = XLSX.utils.aoa_to_sheet(data);
+                
+                // AGREGAR FÓRMULAS para calcular NETO automáticamente
+                processedData.forEach((r, idx) => {
+                    const rowNum = idx + 3; // +3 porque las filas 1 y 2 son headers
+                    
+                    for (let i = 1; i <= cuoShow; i++) {
+                        const netoCol = XLSX.utils.encode_col(13 + (i-1)*5 + 4); // Columna NETO
+                        const montoCol = XLSX.utils.encode_col(13 + (i-1)*5 + 2); // Columna $
+                        const porcCol = XLSX.utils.encode_col(13 + (i-1)*5 + 3); // Columna %
+                        
+                        const cellRef = `${netoCol}${rowNum}`;
+                        const formula = `=${montoCol}${rowNum}*(1-${porcCol}${rowNum})`;
+                        
+                        if (r[`C${i}_$`] && r[`C${i}_$`] > 0) {
+                            ws[cellRef] = { t: 'n', f: formula };
+                        }
+                    }
+                });
+                
+                ws['!cols'] = [{wch:5},{wch:10},{wch:20},{wch:8},{wch:15},{wch:15},{wch:12},{wch:14},{wch:25},{wch:12},{wch:12},{wch:10},{wch:12}];
+                for (let i = 0; i < cuoShow * 5; i++) ws['!cols'].push({wch:12});
+                
+                ws['!merges'] = [{s:{r:0,c:3},e:{r:0,c:8}}];
+                for (let i = 0; i < cuoShow; i++) ws['!merges'].push({s:{r:0,c:13+(i*5)},e:{r:0,c:17+(i*5)}});
+                
+                XLSX.utils.book_append_sheet(wb, ws, "Plantilla");
+                const d = new Date();
+                const fn = `base_PLANTILLA_${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}.xlsx`;
+                XLSX.writeFile(wb, fn);
+            } catch (error) {
+                alert('Error al generar Excel: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
