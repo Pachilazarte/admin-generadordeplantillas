@@ -45,7 +45,6 @@
             position: relative;
         }
         
-        /* Fondo animado ESCENCIAL */
         .bg {
             animation: slide 3s ease-in-out infinite alternate;
             background-image: linear-gradient(-60deg, var(--escencial-green) 50%, var(--escencial-cyan) 50%);
@@ -72,7 +71,6 @@
             100% { transform: translateX(25%); }
         }
         
-        /* Overlay de gradiente */
         body::before {
             content: '';
             position: fixed;
@@ -92,7 +90,6 @@
             min-height: calc(100vh - 80px);
         }
         
-        /* Header */
         header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
@@ -122,7 +119,6 @@
             font-weight: 400;
         }
         
-        /* Card principal */
         .main-card {
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
@@ -164,9 +160,7 @@
             transition: opacity 0.3s ease;
         }
         
-        .upload-box:hover::before {
-            opacity: 1;
-        }
+        .upload-box:hover::before { opacity: 1; }
         
         .upload-box:hover {
             border-color: var(--escencial-cyan-light);
@@ -179,9 +173,7 @@
             background: linear-gradient(135deg, rgba(107, 148, 50, 0.1), rgba(193, 255, 114, 0.1));
         }
         
-        .upload-box.has-file .upload-icon {
-            display: none;
-        }
+        .upload-box.has-file .upload-icon { display: none; }
         
         .upload-box.has-file::after {
             content: attr(data-filename);
@@ -212,11 +204,8 @@
             font-size: 0.95rem;
         }
         
-        .upload-box input[type="file"] {
-            display: none;
-        }
+        .upload-box input[type="file"] { display: none; }
         
-        /* Botones */
         .button-group {
             display: flex;
             gap: 1rem;
@@ -241,10 +230,7 @@
             gap: 0.5rem;
         }
         
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
         
         .btn-primary {
             background: linear-gradient(135deg, var(--escencial-cyan), var(--escencial-cyan-light));
@@ -266,7 +252,6 @@
             box-shadow: 0 8px 25px rgba(107, 148, 50, 0.4);
         }
         
-        /* Loading */
         .loading {
             display: none;
             text-align: center;
@@ -290,7 +275,6 @@
             100% { transform: rotate(360deg); }
         }
         
-        /* Vista previa */
         .preview-section {
             display: none;
             margin-top: 2rem;
@@ -326,7 +310,6 @@
             font-size: 0.9rem;
         }
         
-        /* Alertas */
         .alerts-toggle {
             display: none;
             background: linear-gradient(135deg, rgba(230, 145, 56, 0.1), rgba(230, 145, 56, 0.2));
@@ -362,9 +345,7 @@
             overflow-y: auto;
         }
         
-        .alerts-toggle.open .alerts-content {
-            display: block;
-        }
+        .alerts-toggle.open .alerts-content { display: block; }
         
         .alert-item {
             padding: 0.75rem;
@@ -374,7 +355,6 @@
             font-size: 0.9rem;
         }
         
-        /* Tabla */
         .table-wrapper {
             overflow: auto;
             border-radius: 12px;
@@ -383,60 +363,17 @@
             position: relative;
         }
         
-        .table-wrapper::-webkit-scrollbar {
-            width: 12px;
-            height: 12px;
-        }
+        .table-wrapper::-webkit-scrollbar { width: 12px; height: 12px; }
+        .table-wrapper::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .table-wrapper::-webkit-scrollbar-thumb { background: var(--escencial-cyan); border-radius: 10px; }
+        .table-wrapper::-webkit-scrollbar-thumb:hover { background: var(--escencial-navy); }
         
-        .table-wrapper::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
+        table { width: 100%; border-collapse: collapse; background: white; font-size: 0.85rem; }
+        thead { position: sticky; top: 0; z-index: 10; background: white; }
+        th { padding: 0.75rem 0.5rem; text-align: center; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; border: 1px solid #ddd; }
+        td { padding: 0.75rem 0.5rem; text-align: center; border: 1px solid #eee; }
+        tbody tr:hover { background-color: rgba(34, 217, 223, 0.05); }
         
-        .table-wrapper::-webkit-scrollbar-thumb {
-            background: var(--escencial-cyan);
-            border-radius: 10px;
-        }
-        
-        .table-wrapper::-webkit-scrollbar-thumb:hover {
-            background: var(--escencial-navy);
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            font-size: 0.85rem;
-        }
-        
-        thead {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            background: white;
-        }
-        
-        th {
-            padding: 0.75rem 0.5rem;
-            text-align: center;
-            font-weight: 700;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: 1px solid #ddd;
-        }
-        
-        td {
-            padding: 0.75rem 0.5rem;
-            text-align: center;
-            border: 1px solid #eee;
-        }
-        
-        tbody tr:hover {
-            background-color: rgba(34, 217, 223, 0.05);
-        }
-        
-        /* Colores de columnas */
         .col-estado { background-color: #d9ead3; color: #38761d; }
         .col-obs { background-color: #fff2cc; color: #bf9000; }
         .col-datos-personales { background-color: #cfe2f3; color: #0b5394; }
@@ -446,7 +383,6 @@
         .col-c3 { background-color: #d0e0e3; color: #134f5c; }
         .col-c4 { background-color: #f4cccc; color: #cc0000; }
         
-        /* Footer Completo */
         footer {
             background: var(--escencial-navy-dark);
             padding: 0.8rem 0;
@@ -455,7 +391,7 @@
         }
         
         .footer-content {
-            max-width: 3000px; 
+            max-width: 3000px;
             margin: 0 auto;
             padding: 0 2rem;
             display: flex;
@@ -463,22 +399,9 @@
             align-items: center;
         }
         
-        .footer-link {
-            display: flex;
-            align-items: center;
-            transition: transform 0.2s ease;
-        }
-        
-        .footer-link:hover {
-            transform: scale(1.05);
-        }
-        
-        .footer-logo {
-            max-height: 65px;
-            width: auto;
-            filter: brightness(0) invert(1);
-            opacity: 0.9;
-        }
+        .footer-link { display: flex; align-items: center; transition: transform 0.2s ease; }
+        .footer-link:hover { transform: scale(1.05); }
+        .footer-logo { max-height: 65px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
         
         .footer-text {
             font-family: 'Catamaran', sans-serif;
@@ -488,36 +411,20 @@
             letter-spacing: 0.3px;
         }
         
-        .footer-text strong {
-            color: var(--escencial-cyan-light);
-            font-weight: 600;
-        }
+        .footer-text strong { color: var(--escencial-cyan-light); font-weight: 600; }
         
-        @media (max-width: 600px) {
-            .footer-content {
-                flex-direction: column;
-                gap: 0.8rem;
-                text-align: center;
-            }
-        }
-        
-        /* Responsive */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.8);
             z-index: 1000;
             align-items: center;
             justify-content: center;
         }
         
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: flex; }
         
         .modal-content {
             background: white;
@@ -528,128 +435,20 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
         
-        .modal-content h2 {
-            font-family: 'Catamaran', sans-serif;
-            color: var(--escencial-navy);
-            margin-bottom: 1rem;
-        }
+        .modal-content h2 { font-family: 'Catamaran', sans-serif; color: var(--escencial-navy); margin-bottom: 1rem; }
+        .modal-content p { color: var(--escencial-gray); margin-bottom: 2rem; }
         
-        .modal-content p {
-            color: var(--escencial-gray);
-            margin-bottom: 2rem;
-        }
+        .currency-input { margin-bottom: 1.5rem; }
+        .currency-input label { display: block; font-weight: 600; color: var(--escencial-navy); margin-bottom: 0.5rem; }
+        .currency-input input { width: 100%; padding: 0.75rem; border: 2px solid var(--escencial-cyan); border-radius: 8px; font-size: 1rem; font-family: 'Poppins', sans-serif; }
+        .currency-input input:focus { outline: none; border-color: var(--escencial-green); }
         
-        .currency-input {
-            margin-bottom: 1.5rem;
-        }
-        
-        .currency-input label {
-            display: block;
-            font-weight: 600;
-            color: var(--escencial-navy);
-            margin-bottom: 0.5rem;
-        }
-        
-        .currency-input input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid var(--escencial-cyan);
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .currency-input input:focus {
-            outline: none;
-            border-color: var(--escencial-green);
-        }
-        
-        /* Responsive */
         @media (max-width: 768px) {
-            .upload-section {
-                grid-template-columns: 1fr;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .btn {
-                padding: 0.75rem 1.5rem;
-                font-size: 0.95rem;
-            }
-            
-            .stat-value {
-                font-size: 1.5rem;
-            }
-            
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-        
-        /* Modal de conversión de moneda */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal.active {
-            display: flex;
-        }
-        
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-        
-        .modal-content h2 {
-            font-family: 'Catamaran', sans-serif;
-            color: var(--escencial-navy);
-            margin-bottom: 1rem;
-        }
-        
-        .modal-content p {
-            color: var(--escencial-gray);
-            margin-bottom: 2rem;
-        }
-        
-        .currency-input {
-            margin-bottom: 1.5rem;
-        }
-        
-        .currency-input label {
-            display: block;
-            font-weight: 600;
-            color: var(--escencial-navy);
-            margin-bottom: 0.5rem;
-        }
-        
-        .currency-input input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid var(--escencial-cyan);
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .currency-input input:focus {
-            outline: none;
-            border-color: var(--escencial-green);
+            .upload-section { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
+            .btn { padding: 0.75rem 1.5rem; font-size: 0.95rem; }
+            .stat-value { font-size: 1.5rem; }
+            .footer-content { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -723,7 +522,6 @@
             <a href="https://escencialconsultora.com.ar/index" target="_blank" class="footer-brand">
                 <img src="img/logo-escencial.png" alt="Escencial Logo" class="footer-logo">
             </a>
-            
             <div class="footer-info">
                 <p class="footer-text">© 2026 Todos los derechos reservados - Desarrollado por <strong>Escencial</strong></p>
             </div>
@@ -758,11 +556,290 @@
         let processedData = [];
         let alertsData = [];
         
-        // Variables para conversión de moneda
         let currencyRates = { USD: 0, BOB: 0 };
         let detectedCurrencies = { USD: false, BOB: false };
+
+        // ─────────────────────────────────────────────────────────────────
+        // MAPEO DE COLUMNAS
+        // El código usa nombres canónicos internos; esta función resuelve
+        // los alias reales que pueda traer el Excel de ventas.
+        // ─────────────────────────────────────────────────────────────────
+        function resolverColumnaVenta(row, ...aliases) {
+            for (const alias of aliases) {
+                if (row[alias] !== undefined && row[alias] !== '') return row[alias];
+            }
+            return '';
+        }
+
+        // Helpers de normalización
+        function normalizeText(text) {
+            if (!text) return '';
+            return String(text).trim().toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+                .replace(/\s+/g, ' ');
+        }
         
-        // Event listeners para archivos
+        function normalizeDNI(dni) {
+            if (!dni) return '';
+            return String(dni).replace(/\D/g, '');
+        }
+
+        function simplifyNameTokens(text) {
+            return normalizeText(text)
+                .split(' ')
+                .filter(Boolean)
+                .filter(token => token.length > 1);
+        }
+
+        function areCompatibleDNIs(dniA, dniB) {
+            const a = normalizeDNI(dniA);
+            const b = normalizeDNI(dniB);
+            if (!a || !b) return false;
+            if (a === b) return true;
+            const trimTrailingZero = value => value.endsWith('0') ? value.slice(0, -1) : value;
+            return trimTrailingZero(a) === trimTrailingZero(b);
+        }
+
+        function areCompatibleNames(personaA, personaB) {
+            // FIX: acepta tanto NOMBRES/APELLIDOS (plural, código antiguo)
+            //      como NOMBRE/APELLIDO (singular, columnas reales del Excel)
+            const nombresA = simplifyNameTokens(personaA.NOMBRES || personaA.NOMBRE || personaA.Nombre || '');
+            const nombresB = simplifyNameTokens(personaB.NOMBRES || personaB.NOMBRE || personaB.Nombre || '');
+            const apellidosA = simplifyNameTokens(personaA.APELLIDOS || personaA.APELLIDO || personaA.Apellido || '');
+            const apellidosB = simplifyNameTokens(personaB.APELLIDOS || personaB.APELLIDO || personaB.Apellido || '');
+
+            const hayNombreCompatible = nombresA.some(t => nombresB.includes(t)) || nombresB.some(t => nombresA.includes(t));
+            const apellidosComunes = apellidosA.filter(t => apellidosB.includes(t));
+            return hayNombreCompatible && apellidosComunes.length >= 1;
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // DETECCIÓN DE MONEDA
+        // Formato: termina en .01 = USD, termina en .07 = BOB
+        // ─────────────────────────────────────────────────────────────────
+        function detectCurrency(value, moda) {
+            if (value === undefined || value === null || value === '') return { currency: 'ARS', baseValue: 0 };
+            let str = String(value).trim();
+            
+            str = str.replace(/\$/g, '').replace(/\./g, '');
+            
+            const matchMalFormato = str.match(/^1x(\d+)$/i);
+            if (matchMalFormato) {
+                str = matchMalFormato[1];
+            }
+            
+            if (str.endsWith('07')) {
+                const baseValue = parseFloat(str.replace('07', ''));
+                return { currency: 'BOB', baseValue: baseValue };
+            }
+            
+            if (str.endsWith('01')) {
+                const baseValue = parseFloat(str.replace('01', ''));
+                return { currency: 'USD', baseValue: baseValue };
+            }
+            
+            const numValue = parseFloat(str.replace(/[^0-9]/g, ''));
+            
+            if (numValue > 0 && numValue < 1000 && moda && moda >= 10000) {
+                return { currency: 'ARS', baseValue: numValue * 1000 };
+            }
+            
+            return { currency: 'ARS', baseValue: numValue || 0 };
+        }
+        
+        function calcularModaCuotas(ventas) {
+            const frecuencias = {};
+            ventas.forEach(v => {
+                const numCuotas = v.NUMERO_CUOTAS || 0;
+                if (numCuotas > 0 && numCuotas <= 10) {
+                    frecuencias[numCuotas] = (frecuencias[numCuotas] || 0) + 1;
+                }
+            });
+            let moda = 2;
+            let maxFrecuencia = 0;
+            for (const [valor, frecuencia] of Object.entries(frecuencias)) {
+                if (frecuencia > maxFrecuencia) {
+                    maxFrecuencia = frecuencia;
+                    moda = parseInt(valor);
+                }
+            }
+            return moda;
+        }
+        
+        function convertToARS(baseValue, currency) {
+            if (currency === 'USD') return Math.round(baseValue * currencyRates.USD);
+            else if (currency === 'BOB') return Math.round(baseValue * currencyRates.BOB);
+            return baseValue;
+        }
+        
+        // ─────────────────────────────────────────────────────────────────
+        // PRE-PROCESAMIENTO: detección de monedas extranjeras
+        // FIX: busca tanto 'VALOR PAGADO' como 'MONTO ABONADO'
+        // ─────────────────────────────────────────────────────────────────
+        function preProcessFiles() {
+            detectedCurrencies = { USD: false, BOB: false };
+            
+            ventasData.forEach(venta => {
+                const valorRaw = resolverColumnaVenta(venta, 'VALOR PAGADO', 'MONTO ABONADO', 'MONTO', 'PAGADO');
+                const valorPagado = detectCurrency(valorRaw);
+                if (valorPagado.currency === 'USD') detectedCurrencies.USD = true;
+                if (valorPagado.currency === 'BOB') detectedCurrencies.BOB = true;
+            });
+            
+            if (detectedCurrencies.USD || detectedCurrencies.BOB) {
+                showCurrencyModal();
+            } else {
+                processData();
+            }
+        }
+        
+        function showCurrencyModal() {
+            const modal = document.getElementById('currency-modal');
+            const inputsContainer = document.getElementById('currency-inputs');
+            let html = '';
+            if (detectedCurrencies.BOB) {
+                html += `<div class="currency-input"><label>💵 1 BOB (Peso Boliviano) = cuántos ARS?</label><input type="number" id="rate-bob" placeholder="Ejemplo: 175" step="0.01" required></div>`;
+            }
+            if (detectedCurrencies.USD) {
+                html += `<div class="currency-input"><label>💵 1 USD (Dólar) = cuántos ARS?</label><input type="number" id="rate-usd" placeholder="Ejemplo: 1200" step="0.01" required></div>`;
+            }
+            inputsContainer.innerHTML = html;
+            modal.classList.add('active');
+        }
+        
+        function confirmCurrency() {
+            if (detectedCurrencies.BOB) {
+                const bobRate = parseFloat(document.getElementById('rate-bob').value);
+                if (!bobRate || bobRate <= 0) { alert('Por favor ingresa un valor válido para BOB'); return; }
+                currencyRates.BOB = bobRate;
+            }
+            if (detectedCurrencies.USD) {
+                const usdRate = parseFloat(document.getElementById('rate-usd').value);
+                if (!usdRate || usdRate <= 0) { alert('Por favor ingresa un valor válido para USD'); return; }
+                currencyRates.USD = usdRate;
+            }
+            document.getElementById('currency-modal').classList.remove('active');
+            processData();
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // PARSEO DE CUOTAS
+        // ─────────────────────────────────────────────────────────────────
+        function parsearCuotas(valorPendienteStr) {
+            if (!valorPendienteStr || valorPendienteStr === 'NaN' || valorPendienteStr === 'nan') {
+                return { operaciones: [], totalCuotas: 0, pazYSalvo: true };
+            }
+            
+            const original = String(valorPendienteStr).trim();
+            const estadosPazYSalvo = ['-', '.', '0', 'ok', 'saldado', 'listo', 'pagado', 'completo', 'nan'];
+            if (estadosPazYSalvo.includes(original.toLowerCase()) || original === '') {
+                return { operaciones: [], totalCuotas: 0, pazYSalvo: true };
+            }
+            
+            let str = original
+                .replace(/\$/g, '')
+                .replace(/\./g, '')
+                .replace(/\([^)]*\)/g, '')
+                .replace(/\b(abono|resto|pago|cuota|cuotas|de|del|fecha|día)\b/gi, '')
+                .trim();
+            
+            const separadores = [' y ', ' Y ', ' + ', ' , ', ','];
+            let operacionesStr = [str];
+            for (const sep of separadores) {
+                const nuevasOps = [];
+                operacionesStr.forEach(op => {
+                    if (op.includes(sep)) nuevasOps.push(...op.split(sep).map(s => s.trim()));
+                    else nuevasOps.push(op);
+                });
+                operacionesStr = nuevasOps;
+            }
+            
+            const operaciones = [];
+            operacionesStr.forEach(opStr => {
+                if (!opStr || opStr.length === 0) return;
+                
+                const patronesX = [
+                    /(\d+)\s*[xX*]\s*(\d+)/,
+                    /(\d+)\s+por\s+(\d+)/i,
+                    /(\d+)\s+cuotas?\s+(?:de\s+)?(\d+)/i
+                ];
+                
+                let matchEncontrado = false;
+                for (const patron of patronesX) {
+                    const match = opStr.match(patron);
+                    if (match) {
+                        const num1 = parseInt(match[1]);
+                        const num2 = parseInt(match[2]);
+                        let monto, cuotas;
+                        if (num1 > num2) { monto = num1; cuotas = num2; }
+                        else { monto = num2; cuotas = num1; }
+                        if (cuotas > 10) { [monto, cuotas] = [cuotas, monto]; }
+                        if (monto < 1000) monto = monto * 1000;
+                        operaciones.push({ monto, cuotas });
+                        matchEncontrado = true;
+                        break;
+                    }
+                }
+                if (matchEncontrado) return;
+                
+                if (opStr.match(/(\d+)\s*[xX*]\s*$/)) {
+                    const monto = parseInt(opStr.match(/(\d+)/)[1]);
+                    operaciones.push({ monto, cuotas: 1 });
+                    return;
+                }
+                if (opStr.match(/^\s*[xX*]\s*(\d+)/)) {
+                    const cuotas = parseInt(opStr.match(/(\d+)/)[1]);
+                    operaciones.push({ monto: 0, cuotas, error: true });
+                    return;
+                }
+                const soloNumero = opStr.match(/^(\d+)$/);
+                if (soloNumero) {
+                    const monto = parseInt(soloNumero[1]);
+                    operaciones.push({ monto, cuotas: 1 });
+                }
+            });
+            
+            const totalCuotas = operaciones.reduce((sum, op) => sum + op.cuotas, 0);
+            return { operaciones, totalCuotas, original };
+        }
+        
+        function formatearFechaExcel(fechaValor) {
+            if (!fechaValor) return '';
+            if (typeof fechaValor === 'string' && fechaValor.includes('-')) {
+                try {
+                    const fecha = new Date(fechaValor);
+                    if (!isNaN(fecha.getTime())) {
+                        return `${String(fecha.getDate()).padStart(2,'0')}/${String(fecha.getMonth()+1).padStart(2,'0')}/${fecha.getFullYear()}`;
+                    }
+                } catch(e) { return String(fechaValor); }
+            }
+            if (typeof fechaValor === 'number' || !isNaN(fechaValor)) {
+                const serialDate = parseFloat(fechaValor);
+                const excelEpoch = new Date(1899, 11, 30);
+                const fecha = new Date(excelEpoch.getTime() + serialDate * 86400000);
+                if (!isNaN(fecha.getTime())) {
+                    return `${String(fecha.getDate()).padStart(2,'0')}/${String(fecha.getMonth()+1).padStart(2,'0')}/${fecha.getFullYear()}`;
+                }
+            }
+            return String(fechaValor);
+        }
+        
+        function calcularModaPagos(ventas) {
+            const frecuencias = {};
+            ventas.forEach(v => {
+                const valor = v.VALOR_PAGADO || 0;
+                if (valor > 0) frecuencias[valor] = (frecuencias[valor] || 0) + 1;
+            });
+            let moda = 0, maxFrecuencia = 0;
+            for (const [valor, frecuencia] of Object.entries(frecuencias)) {
+                if (frecuencia > maxFrecuencia) { maxFrecuencia = frecuencia; moda = parseFloat(valor); }
+            }
+            return moda;
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // LEER ARCHIVOS EXCEL
+        // ─────────────────────────────────────────────────────────────────
         document.getElementById('alumnosFile').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
@@ -790,274 +867,18 @@
                 const workbook = XLSX.read(data, {type: 'array'});
                 const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
                 const jsonData = XLSX.utils.sheet_to_json(firstSheet, {defval: ''});
-                
-                if (type === 'alumnos') {
-                    alumnosData = jsonData;
-                } else {
-                    ventasData = jsonData;
-                }
-                
-                if (alumnosData && ventasData) {
-                    document.getElementById('processBtn').disabled = false;
-                }
+                if (type === 'alumnos') alumnosData = jsonData;
+                else ventasData = jsonData;
+                if (alumnosData && ventasData) document.getElementById('processBtn').disabled = false;
             };
             reader.readAsArrayBuffer(file);
         }
         
         document.getElementById('processBtn').addEventListener('click', preProcessFiles);
-        
-        function normalizeText(text) {
-            if (!text) return '';
-            return String(text).trim().toLowerCase()
-                .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-                .replace(/\s+/g, ' ');
-        }
-        
-        function normalizeDNI(dni) {
-            if (!dni) return '';
-            return String(dni).replace(/\D/g, '');
-        }
 
-        function simplifyNameTokens(text) {
-            return normalizeText(text)
-                .split(' ')
-                .filter(Boolean)
-                .filter(token => token.length > 1);
-        }
-
-        function areCompatibleDNIs(dniA, dniB) {
-            const a = normalizeDNI(dniA);
-            const b = normalizeDNI(dniB);
-            if (!a || !b) return false;
-            if (a === b) return true;
-
-            const trimTrailingZero = value => value.endsWith('0') ? value.slice(0, -1) : value;
-            return trimTrailingZero(a) === trimTrailingZero(b);
-        }
-
-        function areCompatibleNames(personaA, personaB) {
-            const nombresA = simplifyNameTokens(personaA.NOMBRES || personaA.Nombre || '');
-            const nombresB = simplifyNameTokens(personaB.NOMBRES || personaB.Nombre || '');
-            const apellidosA = simplifyNameTokens(personaA.APELLIDOS || personaA.Apellido || '');
-            const apellidosB = simplifyNameTokens(personaB.APELLIDOS || personaB.Apellido || '');
-
-            const hayNombreCompatible = nombresA.some(token => nombresB.includes(token)) || nombresB.some(token => nombresA.includes(token));
-            const apellidosComunes = apellidosA.filter(token => apellidosB.includes(token));
-            const hayApellidoCompatible = apellidosComunes.length >= 1;
-
-            return hayNombreCompatible && hayApellidoCompatible;
-        }
-
-        // FUNCIÓN: Detectar moneda extranjera y limpiar formatos
-        // Formato: Si el valor termina en .01 = USD, si termina en .07 = BOB (Peso Boliviano)
-        // También maneja: "$16.000", "1x96000", valores truncados como "16" o "17"
-        function detectCurrency(value, moda) {
-            if (!value) return { currency: 'ARS', baseValue: 0 };
-            let str = String(value).trim();
-            
-            // Limpiar formato "$16.000" → "16000"
-            str = str.replace(/\$/g, '').replace(/\./g, '');
-            
-            // Detectar formato mal escrito "1x96000" → "96000"
-            const matchMalFormato = str.match(/^1x(\d+)$/i);
-            if (matchMalFormato) {
-                str = matchMalFormato[1];
-                console.warn(`⚠️ Formato corregido: "1x${matchMalFormato[1]}" → "${str}"`);
-            }
-            
-            // Detectar BOB (Peso Boliviano) - termina en 07
-            if (str.endsWith('07')) {
-                const baseValue = parseFloat(str.replace('07', ''));
-                return { currency: 'BOB', baseValue: baseValue };
-            }
-            
-            // Detectar USD (Dólar) - termina en 01
-            if (str.endsWith('01')) {
-                const baseValue = parseFloat(str.replace('01', ''));
-                return { currency: 'USD', baseValue: baseValue };
-            }
-            
-            // Limpiar y convertir a número
-            const numValue = parseFloat(str.replace(/[^0-9]/g, ''));
-            
-            // COMPLETAR VALORES TRUNCADOS
-            // Si el valor es muy pequeño (ej: 16, 17, 88) y hay una moda, multiplicar
-            if (numValue > 0 && numValue < 1000 && moda && moda >= 10000) {
-                const valorCompleto = numValue * 1000;
-                console.log(`🔧 Valor truncado corregido: ${numValue} → ${valorCompleto} (cerca de moda: ${moda})`);
-                return { currency: 'ARS', baseValue: valorCompleto };
-            }
-            
-            // Si no tiene marcador, es ARS (Pesos Argentinos)
-            return { currency: 'ARS', baseValue: numValue || 0 };
-        }
-        
-        // FUNCIÓN: Calcular moda de número de cuotas
-        function calcularModaCuotas(ventas) {
-            const frecuencias = {};
-            
-            ventas.forEach(v => {
-                const numCuotas = v.NUMERO_CUOTAS || 0;
-                if (numCuotas > 0 && numCuotas <= 10) { // Solo cuotas razonables (1-10)
-                    frecuencias[numCuotas] = (frecuencias[numCuotas] || 0) + 1;
-                }
-            });
-            
-            let moda = 2; // Default 2 cuotas si no se encuentra
-            let maxFrecuencia = 0;
-            
-            for (const [valor, frecuencia] of Object.entries(frecuencias)) {
-                if (frecuencia > maxFrecuencia) {
-                    maxFrecuencia = frecuencia;
-                    moda = parseInt(valor);
-                }
-            }
-            
-            console.log(`🎯 MODA DE CUOTAS: ${moda} cuota(s) (aparece ${maxFrecuencia} veces)`);
-            return moda;
-        }
-        
-        // FUNCIÓN: Convertir a ARS usando las tasas ingresadas
-        function convertToARS(baseValue, currency) {
-            if (currency === 'USD') return Math.round(baseValue * currencyRates.USD);
-            else if (currency === 'BOB') return Math.round(baseValue * currencyRates.BOB);
-            return baseValue;
-        }
-        
-        // FUNCIÓN: Pre-procesar archivos para detectar monedas extranjeras
-        function preProcessFiles() {
-            detectedCurrencies = { USD: false, BOB: false };
-            
-            // Buscar en todos los valores de ventas
-            ventasData.forEach(venta => {
-                const valorPagado = detectCurrency(venta['VALOR PAGADO']);
-                if (valorPagado.currency === 'USD') detectedCurrencies.USD = true;
-                if (valorPagado.currency === 'BOB') detectedCurrencies.BOB = true;
-            });
-            
-            // Si se detectaron monedas extranjeras, mostrar modal
-            if (detectedCurrencies.USD || detectedCurrencies.BOB) {
-                console.log('💱 Monedas detectadas:', detectedCurrencies);
-                showCurrencyModal();
-            } else {
-                // Si no hay monedas extranjeras, procesar directamente
-                processData();
-            }
-        }
-        
-        // FUNCIÓN: Mostrar modal de conversión
-        function showCurrencyModal() {
-            const modal = document.getElementById('currency-modal');
-            const inputsContainer = document.getElementById('currency-inputs');
-            
-            let html = '';
-            if (detectedCurrencies.BOB) {
-                html += `
-                    <div class="currency-input">
-                        <label>💵 1 BOB (Peso Boliviano) = cuántos ARS?</label>
-                        <input type="number" id="rate-bob" placeholder="Ejemplo: 175" step="0.01" required>
-                    </div>
-                `;
-            }
-            if (detectedCurrencies.USD) {
-                html += `
-                    <div class="currency-input">
-                        <label>💵 1 USD (Dólar) = cuántos ARS?</label>
-                        <input type="number" id="rate-usd" placeholder="Ejemplo: 1200" step="0.01" required>
-                    </div>
-                `;
-            }
-            
-            inputsContainer.innerHTML = html;
-            modal.classList.add('active');
-        }
-        
-        // FUNCIÓN: Confirmar tasas de conversión
-        function confirmCurrency() {
-            if (detectedCurrencies.BOB) {
-                const bobRate = parseFloat(document.getElementById('rate-bob').value);
-                if (!bobRate || bobRate <= 0) {
-                    alert('Por favor ingresa un valor válido para BOB');
-                    return;
-                }
-                currencyRates.BOB = bobRate;
-                console.log(`✅ Tasa BOB: 1 BOB = ${bobRate} ARS`);
-            }
-            
-            if (detectedCurrencies.USD) {
-                const usdRate = parseFloat(document.getElementById('rate-usd').value);
-                if (!usdRate || usdRate <= 0) {
-                    alert('Por favor ingresa un valor válido para USD');
-                    return;
-                }
-                currencyRates.USD = usdRate;
-                console.log(`✅ Tasa USD: 1 USD = ${usdRate} ARS`);
-            }
-            
-            document.getElementById('currency-modal').classList.remove('active');
-            processData();
-        }
-        
-        // NUEVA FUNCIÓN: Convertir fecha de Excel a formato legible
-        function formatearFechaExcel(fechaValor) {
-            if (!fechaValor) return '';
-            
-            // Si ya es una fecha válida en formato string, devolverla
-            if (typeof fechaValor === 'string' && fechaValor.includes('-')) {
-                try {
-                    const fecha = new Date(fechaValor);
-                    if (!isNaN(fecha.getTime())) {
-                        const dia = String(fecha.getDate()).padStart(2, '0');
-                        const mes = String(fecha.getMonth() + 1).padStart(2, '0');
-                        const anio = fecha.getFullYear();
-                        return `${dia}/${mes}/${anio}`;
-                    }
-                } catch (e) {
-                    return String(fechaValor);
-                }
-            }
-            
-            // Si es un número (serial de Excel), convertirlo
-            if (typeof fechaValor === 'number' || !isNaN(fechaValor)) {
-                const serialDate = parseFloat(fechaValor);
-                // Excel serial: días desde 1900-01-01
-                const excelEpoch = new Date(1899, 11, 30); // 30 dic 1899
-                const fecha = new Date(excelEpoch.getTime() + serialDate * 86400000);
-                
-                if (!isNaN(fecha.getTime())) {
-                    const dia = String(fecha.getDate()).padStart(2, '0');
-                    const mes = String(fecha.getMonth() + 1).padStart(2, '0');
-                    const anio = fecha.getFullYear();
-                    return `${dia}/${mes}/${anio}`;
-                }
-            }
-            
-            return String(fechaValor);
-        }
-        
-        // NUEVA FUNCIÓN: Calcular la MODA (valor más frecuente) de pagos
-        function calcularModaPagos(ventas) {
-            const frecuencias = {};
-            ventas.forEach(v => {
-                const valor = v.VALOR_PAGADO || 0; // Ya viene convertido a ARS
-                if (valor > 0) {
-                    frecuencias[valor] = (frecuencias[valor] || 0) + 1;
-                }
-            });
-            
-            let moda = 0;
-            let maxFrecuencia = 0;
-            for (const [valor, frecuencia] of Object.entries(frecuencias)) {
-                if (frecuencia > maxFrecuencia) {
-                    maxFrecuencia = frecuencia;
-                    moda = parseFloat(valor);
-                }
-            }
-            
-            console.log(`🎯 MODA CALCULADA (Inscripción): $${moda} (aparece ${maxFrecuencia} veces)`);
-            return moda;
-        }
-        
+        // ─────────────────────────────────────────────────────────────────
+        // PROCESAMIENTO PRINCIPAL
+        // ─────────────────────────────────────────────────────────────────
         function processData() {
             document.getElementById('loading').classList.add('active');
             processedData = [];
@@ -1065,274 +886,118 @@
             
             setTimeout(() => {
                 try {
-                    // PRIMERA PASADA: Calcular moda sin corrección de truncados
+                    // PRIMERA PASADA: calcular moda preliminar
                     const valoresParaModa = ventasData.map(v => {
-                        const det = detectCurrency(v['VALOR PAGADO'], null);
-                        return det.baseValue;
+                        const valorRaw = resolverColumnaVenta(v, 'VALOR PAGADO', 'MONTO ABONADO', 'MONTO', 'PAGADO');
+                        return detectCurrency(valorRaw, null).baseValue;
                     }).filter(v => v > 0);
                     
                     const frecuenciasModa = {};
-                    valoresParaModa.forEach(v => {
-                        frecuenciasModa[v] = (frecuenciasModa[v] || 0) + 1;
-                    });
-                    
-                    let modaPreliminar = 0;
-                    let maxFrecuencia = 0;
+                    valoresParaModa.forEach(v => { frecuenciasModa[v] = (frecuenciasModa[v] || 0) + 1; });
+                    let modaPreliminar = 0, maxFrecuencia = 0;
                     for (const [valor, frecuencia] of Object.entries(frecuenciasModa)) {
-                        if (frecuencia > maxFrecuencia) {
-                            maxFrecuencia = frecuencia;
-                            modaPreliminar = parseFloat(valor);
-                        }
+                        if (frecuencia > maxFrecuencia) { maxFrecuencia = frecuencia; modaPreliminar = parseFloat(valor); }
                     }
                     
-                    console.log(`🎯 MODA PRELIMINAR (para corrección): $${modaPreliminar}`);
-                    
                     // Normalizar alumnos
+                    // FIX: las columnas de SOCIEDADES son: ID, Apellido, Nombre, DNI, Celular, Email
                     const alumnos = alumnosData.map((a, idx) => ({
                         ID: a.ID || '',
-                        APELLIDOS: (a.Apellido || '').trim(),
-                        NOMBRES: (a.Nombre || '').trim(),
-                        DNI: normalizeDNI(a.DNI),
-                        CELULAR: String(a.Celular || '').trim(), // Copia literal del celular
-                        MAIL: (a.Email || '').trim(),
+                        APELLIDOS: (a.Apellido || a.APELLIDOS || a.APELLIDO || '').trim(),
+                        NOMBRES:   (a.Nombre  || a.NOMBRES  || a.NOMBRE  || '').trim(),
+                        DNI:       normalizeDNI(a.DNI),
+                        CELULAR:   String(a.Celular || a.CELULAR || '').trim(),
+                        MAIL:      (a.Email || a.EMAIL || a.MAIL || '').trim(),
                         _idx: idx,
-                        _searchKey: normalizeText(`${a.Apellido} ${a.Nombre} ${a.DNI}`),
-                        _nameKey: normalizeText(`${a.Apellido || ''} ${a.Nombre || ''}`)
+                        _searchKey: normalizeText(`${a.Apellido||''} ${a.Nombre||''} ${a.DNI||''}`),
+                        _nameKey:   normalizeText(`${a.Apellido||''} ${a.Nombre||''}`)
                     }));
                     
                     const matchedVentaIndexes = new Set();
-                    const alumnosDNIs = new Set(alumnos.map(a => normalizeDNI(a.DNI)).filter(Boolean));
-                    const alumnosDNIsCompatibles = new Set(
-                        alumnos
-                            .map(a => normalizeDNI(a.DNI))
-                            .filter(Boolean)
-                            .flatMap(dni => [dni, dni.endsWith('0') ? dni.slice(0, -1) : dni])
-                    );
                     
-                    // NUEVA FUNCIÓN MEJORADA: Parsear información de cuotas desde VALOR PENDIENTE
-                    // Maneja todos los patrones posibles: "x", "por", "*", "y", "+", ",", números solos, etc.
-                    function parsearCuotas(valorPendienteStr) {
-                        // Si no hay valor o es NaN, considerar como Paz y Salvo
-                        if (!valorPendienteStr || valorPendienteStr === 'NaN' || valorPendienteStr === 'nan') {
-                            return { operaciones: [], totalCuotas: 0, pazYSalvo: true };
-                        }
-                        
-                        const original = String(valorPendienteStr).trim();
-                        
-                        // GRUPO 4: Estado "Paz y Salvo" (ya pagó todo o no debe nada)
-                        const estadosPazYSalvo = ['-', '.', '0', 'ok', 'saldado', 'listo', 'pagado', 'completo', 'nan'];
-                        if (estadosPazYSalvo.includes(original.toLowerCase()) || original === '') {
-                            return { operaciones: [], totalCuotas: 0, pazYSalvo: true };
-                        }
-                        
-                        // Limpiar: quitar $, puntos de miles, paréntesis, texto irrelevante
-                        let str = original
-                            .replace(/\$/g, '')
-                            .replace(/\./g, '') // Quitar puntos de miles
-                            .replace(/\([^)]*\)/g, '') // Quitar texto entre paréntesis
-                            .replace(/\b(abono|resto|pago|cuota|cuotas|de|del|fecha|día)\b/gi, '') // Quitar palabras comunes
-                            .trim();
-                        
-                        // GRUPO 2: Operaciones Múltiples - dividir por separadores
-                        const separadores = [' y ', ' Y ', ' + ', ' , ', ','];
-                        let operacionesStr = [str];
-                        
-                        for (const sep of separadores) {
-                            const nuevasOps = [];
-                            operacionesStr.forEach(op => {
-                                if (op.includes(sep)) {
-                                    nuevasOps.push(...op.split(sep).map(s => s.trim()));
-                                } else {
-                                    nuevasOps.push(op);
-                                }
-                            });
-                            operacionesStr = nuevasOps;
-                        }
-                        
-                        const operaciones = [];
-                        
-                        // Procesar cada operación individual
-                        operacionesStr.forEach(opStr => {
-                            if (!opStr || opStr.length === 0) return;
-                            
-                            // GRUPO 1: Operaciones con "X", "x", "por", "*"
-                            const patronesX = [
-                                /(\d+)\s*[xX*]\s*(\d+)/,  // "55930 x 1", "79900x1", "48500*2"
-                                /(\d+)\s+por\s+(\d+)/i,   // "50000 por 2"
-                                /(\d+)\s+cuotas?\s+(?:de\s+)?(\d+)/i // "2 cuotas de 50000"
-                            ];
-                            
-                            let matchEncontrado = false;
-                            
-                            for (const patron of patronesX) {
-                                const match = opStr.match(patron);
-                                if (match) {
-                                    const num1 = parseInt(match[1]);
-                                    const num2 = parseInt(match[2]);
-                                    
-                                    // CORRECCIÓN: El número MÁS PEQUEÑO es las cuotas, el MÁS GRANDE es el monto
-                                    // Ejemplo: "71900 x 1" → num1=71900, num2=1 → monto=71900, cuotas=1
-                                    let monto, cuotas;
-                                    if (num1 > num2) {
-                                        monto = num1;
-                                        cuotas = num2;
-                                    } else {
-                                        monto = num2;
-                                        cuotas = num1;
-                                    }
-                                    
-                                    // Validación: cuotas debe ser razonable (1-10)
-                                    if (cuotas > 10) {
-                                        console.warn(`⚠️ Número de cuotas sospechoso: ${cuotas}. Intercambiando valores.`);
-                                        [monto, cuotas] = [cuotas, monto];
-                                    }
-                                    
-                                    // Validación: si el "monto" es menor a 1000, probablemente es un error decimal
-                                    if (monto < 1000) {
-                                        console.warn(`⚠️ Posible error decimal: ${original} → Monto=${monto}`);
-                                        monto = monto * 1000; // Asumimos que falta un cero
-                                    }
-                                    
-                                    operaciones.push({ monto, cuotas });
-                                    matchEncontrado = true;
-                                    break;
-                                }
-                            }
-                            
-                            if (matchEncontrado) return;
-                            
-                            // GRUPO 5: Errores - terminaciones incompletas
-                            if (opStr.match(/(\d+)\s*[xX*]\s*$/)) {
-                                // "50000x" - falta la cuota
-                                const monto = parseInt(opStr.match(/(\d+)/)[1]);
-                                operaciones.push({ monto, cuotas: 1 });
-                                console.warn(`⚠️ Formato incompleto (falta cuota): ${original} → asumiendo 1 cuota`);
-                                return;
-                            }
-                            
-                            if (opStr.match(/^\s*[xX*]\s*(\d+)/)) {
-                                // "x2" - falta el monto
-                                const cuotas = parseInt(opStr.match(/(\d+)/)[1]);
-                                console.error(`❌ ERROR: Falta el monto en "${original}". Solo se encontró ${cuotas} cuota(s).`);
-                                operaciones.push({ monto: 0, cuotas, error: true });
-                                return;
-                            }
-                            
-                            // GRUPO 3: Valores Implícitos - solo un número
-                            const soloNumero = opStr.match(/^(\d+)$/);
-                            if (soloNumero) {
-                                const monto = parseInt(soloNumero[1]);
-                                operaciones.push({ monto, cuotas: 1 });
-                                return;
-                            }
-                            
-                            // Si llegamos aquí, el formato no se reconoció
-                            console.warn(`⚠️ Formato no reconocido: "${original}"`);
-                        });
-                        
-                        // Calcular total de cuotas
-                        const totalCuotas = operaciones.reduce((sum, op) => sum + op.cuotas, 0);
-                        
-                        return { operaciones, totalCuotas, original };
-                    }
-                    
-                    // Normalizar ventas (SEGUNDA PASADA con moda ya calculada)
+                    // Normalizar ventas
+                    // FIX: columnas reales en VENTAS: NOMBRE, APELLIDO, DNI, MONTO ABONADO, ASESORA, CONCEPTO, PENDIENTE, COMPROBANTE
                     const ventas = ventasData.map((v, ventaIndex) => {
-                        const infoCuotas = parsearCuotas(v['VALOR PENDIENTE']);
+                        // Resolver columnas con aliases
+                        const valorPagadoRaw   = resolverColumnaVenta(v, 'VALOR PAGADO', 'MONTO ABONADO', 'MONTO', 'PAGADO');
+                        const valorPendienteRaw = resolverColumnaVenta(v, 'VALOR PENDIENTE', 'PENDIENTE', 'CUOTAS PENDIENTES');
+                        const nombresRaw        = resolverColumnaVenta(v, 'NOMBRES', 'NOMBRE', 'Nombre');
+                        const apellidosRaw      = resolverColumnaVenta(v, 'APELLIDOS', 'APELLIDO', 'Apellido');
+                        const asesorRaw         = resolverColumnaVenta(v, 'ASESOR', 'ASESORA', 'Asesor', 'Asesora');
+                        const conceptoRaw       = resolverColumnaVenta(v, 'CONCEPTO PAGADO', 'CONCEPTO', 'Concepto');
+                        const comprobanteRaw    = resolverColumnaVenta(v, 'COMPROBANTE', 'TIPO COMPROBANTE', 'Comprobante');
+                        const marcaTemporalRaw  = resolverColumnaVenta(v, 'Marca temporal', 'FECHA', 'Fecha', 'MARCA TEMPORAL');
                         
-                        // CONVERTIR VALOR PAGADO si está en moneda extranjera
-                        // Ahora con moda preliminar para corregir truncados
-                        const valorPagadoDeteccion = detectCurrency(v['VALOR PAGADO'], modaPreliminar);
+                        const infoCuotas = parsearCuotas(valorPendienteRaw);
+                        
+                        const valorPagadoDeteccion = detectCurrency(valorPagadoRaw, modaPreliminar);
                         const valorPagadoARS = convertToARS(valorPagadoDeteccion.baseValue, valorPagadoDeteccion.currency);
                         
-                        // Log si hubo conversión
-                        if (valorPagadoDeteccion.currency !== 'ARS') {
-                            console.log(`💱 Conversión: ${v['APELLIDOS']} pagó ${valorPagadoDeteccion.baseValue} ${valorPagadoDeteccion.currency} = ${valorPagadoARS} ARS`);
-                        }
-                        
-                        // Buscar columna de ASESOR/ASESORA (flexible)
-                        const asesor = v['ASESOR'] || v['ASESORA'] || v['Asesor'] || v['Asesora'] || '';
-                        
-                        // Calcular monto promedio de cuota y número total de cuotas
                         let montoCuotaPromedio = 0;
                         let numeroCuotasTotal = infoCuotas.totalCuotas;
-                        
                         if (infoCuotas.operaciones && infoCuotas.operaciones.length > 0) {
                             const montoTotal = infoCuotas.operaciones.reduce((sum, op) => sum + (op.monto * op.cuotas), 0);
-                            // Redondear SIEMPRE HACIA ARRIBA con máximo 2 decimales
                             montoCuotaPromedio = numeroCuotasTotal > 0 ? Math.ceil((montoTotal / numeroCuotasTotal) * 100) / 100 : 0;
                         }
                         
                         return {
-                            DNI: normalizeDNI(v.DNI),
-                            NOMBRES: (v.NOMBRES || '').trim(),
-                            APELLIDOS: (v.APELLIDOS || '').trim(),
-                            MARCA_TEMPORAL: v['Marca temporal'] || '',
-                            VALOR_PAGADO: valorPagadoARS, // ← Ya convertido a ARS
+                            DNI:                  normalizeDNI(v.DNI),
+                            NOMBRES:              nombresRaw.trim(),
+                            APELLIDOS:            apellidosRaw.trim(),
+                            MARCA_TEMPORAL:       marcaTemporalRaw,
+                            VALOR_PAGADO:         valorPagadoARS,
                             VALOR_PAGADO_ORIGINAL: valorPagadoDeteccion.baseValue,
-                            MONEDA_ORIGINAL: valorPagadoDeteccion.currency,
-                            VALOR_PENDIENTE_STR: String(v['VALOR PENDIENTE'] || '').trim(),
-                            INFO_CUOTAS: infoCuotas,
-                            MONTO_CUOTA: montoCuotaPromedio,
-                            NUMERO_CUOTAS: numeroCuotasTotal,
-                            COMPROBANTE: v['COMPROBANTE'] || '',
-                            ASESOR: asesor.trim(), // ← Flexible: busca ASESOR o ASESORA
-                            CONCEPTO: (v['CONCEPTO PAGADO'] || '').trim(),
-                            TIPO_COMPROBANTE: (v['TIPO COMPROBANTE'] || '').trim(), // ← Cambiado a TIPO COMPROBANTE
-                            _idx: ventaIndex,
-                            _searchKey: normalizeText(`${v.APELLIDOS} ${v.NOMBRES} ${v.DNI}`),
-                            _nameKey: normalizeText(`${v.APELLIDOS || ''} ${v.NOMBRES || ''}`)
+                            MONEDA_ORIGINAL:      valorPagadoDeteccion.currency,
+                            VALOR_PENDIENTE_STR:  String(valorPendienteRaw).trim(),
+                            INFO_CUOTAS:          infoCuotas,
+                            MONTO_CUOTA:          montoCuotaPromedio,
+                            NUMERO_CUOTAS:        numeroCuotasTotal,
+                            COMPROBANTE:          comprobanteRaw,
+                            ASESOR:               asesorRaw.trim(),
+                            CONCEPTO:             conceptoRaw.trim(),
+                            TIPO_COMPROBANTE:     '',  // no existe columna separada en este Excel
+                            _idx:                 ventaIndex,
+                            _searchKey:           normalizeText(`${apellidosRaw} ${nombresRaw} ${v.DNI||''}`),
+                            _nameKey:             normalizeText(`${apellidosRaw} ${nombresRaw}`)
                         };
                     });
                     
-                    // CALCULAR MODA FINAL usando valores YA CONVERTIDOS y CORREGIDOS
-                    const modaFinal = calcularModaPagos(ventas);
-                    
-                    // CALCULAR MODA DE CUOTAS
+                    const modaFinal  = calcularModaPagos(ventas);
                     const modaCuotas = calcularModaCuotas(ventas);
                     
                     // Consolidar múltiples ventas del mismo alumno
-                    function consolidarVentasAlumno(ventasAlumno, tipoMatch = 'dni_exacto') {
+                    function consolidarVentasAlumno(ventasAlumno, tipoMatch) {
                         if (!ventasAlumno || ventasAlumno.length === 0) return null;
-
                         const ventasOrdenadas = [...ventasAlumno].sort((a, b) => {
                             const fechaA = a.MARCA_TEMPORAL ? new Date(a.MARCA_TEMPORAL).getTime() : 0;
                             const fechaB = b.MARCA_TEMPORAL ? new Date(b.MARCA_TEMPORAL).getTime() : 0;
                             return fechaB - fechaA;
                         });
-
                         const ventaBase = { ...ventasOrdenadas[0] };
                         ventaBase.VALOR_PAGADO = ventasAlumno.reduce((sum, v) => sum + (parseFloat(v.VALOR_PAGADO) || 0), 0);
                         ventaBase.VALOR_PAGADO_ORIGINAL = ventasAlumno.reduce((sum, v) => sum + (parseFloat(v.VALOR_PAGADO_ORIGINAL ?? v.VALOR_PAGADO) || 0), 0);
                         ventaBase.COMPROBANTE = ventasAlumno.map(v => v.COMPROBANTE).filter(Boolean).join(' | ');
                         ventaBase._ventasMultiples = ventasAlumno.length > 1;
-                        ventaBase._cantidadVentas = ventasAlumno.length;
+                        ventaBase._cantidadVentas  = ventasAlumno.length;
                         ventaBase._matchType = tipoMatch;
                         ventaBase._matchedVentaIndexes = ventasAlumno.map(v => v._idx);
-
                         return ventaBase;
                     }
 
                     function buscarVentasDeAlumno(alumno) {
                         const ventasDisponibles = ventas.filter(v => !matchedVentaIndexes.has(v._idx));
-
                         const porDniExacto = ventasDisponibles.filter(v => normalizeDNI(v.DNI) === normalizeDNI(alumno.DNI));
                         if (porDniExacto.length > 0) return { ventas: porDniExacto, tipo: 'dni_exacto' };
-
                         const porDniCompatibleYNombre = ventasDisponibles.filter(v => areCompatibleDNIs(v.DNI, alumno.DNI) && areCompatibleNames(v, alumno));
                         if (porDniCompatibleYNombre.length > 0) return { ventas: porDniCompatibleYNombre, tipo: 'dni_compatible_nombre' };
-
                         const porNombreCompatible = ventasDisponibles.filter(v => areCompatibleNames(v, alumno));
                         if (porNombreCompatible.length === 1) return { ventas: porNombreCompatible, tipo: 'nombre_compatible_unico' };
-
                         return { ventas: [], tipo: '' };
                     }
 
-                    // Procesar cada alumno
                     alumnos.forEach((alumno, index) => {
                         const matchAlumno = buscarVentasDeAlumno(alumno);
                         const venta = consolidarVentasAlumno(matchAlumno.ventas, matchAlumno.tipo);
-
                         if (venta && venta._matchedVentaIndexes) {
                             venta._matchedVentaIndexes.forEach(idx => matchedVentaIndexes.add(idx));
                         }
@@ -1354,7 +1019,6 @@
                             '_cuotasCantidad': 0
                         };
                         
-                        // Inicializar columnas de cuotas (vacías por defecto)
                         for (let i = 1; i <= 4; i++) {
                             row[`C${i}_FECHA`] = '';
                             row[`C${i}_COD_REF`] = '';
@@ -1364,115 +1028,88 @@
                         }
                         
                         if (venta) {
-                            const valorPagado = venta.VALOR_PAGADO; // Ya está en ARS (convertido)
-                            const montoCuota = venta.MONTO_CUOTA;
+                            const valorPagado = venta.VALOR_PAGADO;
+                            const montoCuota  = venta.MONTO_CUOTA;
                             const numeroCuotas = venta.NUMERO_CUOTAS;
-                            const infoCuotas = venta.INFO_CUOTAS;
+                            const infoCuotas  = venta.INFO_CUOTAS;
                             
-                            console.log(`💰 ${alumno.APELLIDOS}: Valor Pagado = ${valorPagado} ARS${venta.MONEDA_ORIGINAL !== 'ARS' ? ` (convertido desde ${venta.VALOR_PAGADO_ORIGINAL} ${venta.MONEDA_ORIGINAL})` : ''}`);
-                            
-                            // DETECCIÓN MEJORADA DE BECADOS
-                            // 1. Por palabra clave en CONCEPTO PAGADO
+                            // ─────────────────────────────────────────────
+                            // DETECCIÓN DE BECADOS — LÓGICA CORREGIDA
+                            //
+                            // ANTES: "valorPagado === 0" se usaba como
+                            //   criterio INDEPENDIENTE → falso positivo
+                            //   cuando la columna no existía y devolvía 0.
+                            //
+                            // AHORA: solo se marca BECADO si:
+                            //   1. La palabra "beca" aparece en CONCEPTO, o
+                            //   2. El texto del CONCEPTO es explícitamente
+                            //      una marca de beca (texto, no número), Y
+                            //   3. No hay cuotas pendientes detectadas.
+                            //
+                            // "valorPagado === 0" por sí solo NO alcanza;
+                            // debe combinarse con sinMontoDetectable.
+                            // ─────────────────────────────────────────────
                             const conceptoLower = (venta.CONCEPTO || '').toLowerCase();
-                            const esBecadoPorConcepto = conceptoLower.includes('beca') || 
-                                                        conceptoLower.includes('becado') || 
+                            const esBecadoPorConcepto = conceptoLower.includes('beca') ||
+                                                        conceptoLower.includes('becado') ||
                                                         conceptoLower.includes('becada');
                             
-                            // 2. Por patrones en VALOR PAGADO o VALOR PENDIENTE (sin monto detectable)
-                            const patronesBeca = ['-', '.', 'beca', 'becado', 'becada', 'ok', 'saldado', 'listo', ''];
-                            
-                            // Usar el valor ORIGINAL (antes de conversión) para detectar patrones de texto
-                            const valorPagadoOriginalStr = String(venta.VALOR_PAGADO_ORIGINAL || '').toLowerCase().trim();
                             const valorPendienteStr = (venta.VALOR_PENDIENTE_STR || '').toLowerCase().trim();
+                            const patronesBecaTexto = ['beca', 'becado', 'becada'];
+                            const esBecadoPorPendienteTexto = patronesBecaTexto.some(p => valorPendienteStr.includes(p));
                             
-                            const esBecadoPorValorPagado = patronesBeca.includes(valorPagadoOriginalStr) || 
-                                                          valorPagadoOriginalStr.includes('beca') ||
-                                                          valorPagado === 0 ||
-                                                          isNaN(valorPagado);
+                            // sinMontoDetectable = no pagó nada Y no debe cuotas
+                            const sinMontoDetectable = (valorPagado === 0 || isNaN(valorPagado)) &&
+                                                       (infoCuotas.pazYSalvo || numeroCuotas === 0);
                             
-                            const esBecadoPorValorPendiente = patronesBeca.includes(valorPendienteStr) || 
-                                                             valorPendienteStr.includes('beca');
-                            
-                            // 3. Por falta de montos detectables en AMBOS campos (F y K)
-                            const sinMontoDetectable = (valorPagado === 0 || isNaN(valorPagado)) && 
-                                                      (infoCuotas.pazYSalvo || numeroCuotas === 0);
-                            
-                            // Un alumno es BECADO si cumple CUALQUIERA de estas condiciones
-                            const esBecado = esBecadoPorConcepto || esBecadoPorValorPagado || 
-                                           (esBecadoPorValorPendiente && sinMontoDetectable);
+                            // FIX: NO usar valorPagado===0 como criterio independiente.
+                            // Solo es becado si hay evidencia textual explícita.
+                            const esBecado = esBecadoPorConcepto ||
+                                             esBecadoPorPendienteTexto ||
+                                             (sinMontoDetectable && esBecadoPorConcepto);
                             
                             if (esBecado) {
                                 row['ESTADO'] = 'BECADO';
                                 row['OBSERVACIÓN'] = '🎓 Alumno becado';
-                                
-                                // Determinar razón de la detección para el log
-                                let razon = '';
-                                if (esBecadoPorConcepto) razon = 'concepto';
-                                else if (esBecadoPorValorPagado) razon = 'valor pagado';
-                                else if (esBecadoPorValorPendiente) razon = 'valor pendiente';
-                                else if (sinMontoDetectable) razon = 'sin montos detectables';
-                                
-                                console.log(`🎓 BECADO DETECTADO (${razon}): ${alumno.APELLIDOS} ${alumno.NOMBRES}`);
-                                
                                 alertsData.push({
                                     tipo: 'becado',
-                                    mensaje: `🎓 BECADO: ${alumno.APELLIDOS} ${alumno.NOMBRES} (DNI: ${alumno.DNI}) - Razón: ${razon}`
+                                    mensaje: `🎓 BECADO: ${alumno.APELLIDOS} ${alumno.NOMBRES} (DNI: ${alumno.DNI})`
                                 });
                             } else {
                                 row['ESTADO'] = 'ACTIVO';
-                                row['OBSERVACIÓN'] = ''; // Inicializar vacío
+                                row['OBSERVACIÓN'] = '';
                             }
                             
-                            // SIEMPRE asignar vendedora (columna G del drive de ventas → columna J de la plantilla)
-                            row['VENDEDORA'] = venta.ASESOR || '';
-                            row['MEDIO DE PAGO'] = venta.TIPO_COMPROBANTE || ''; // ← Cambiado a TIPO_COMPROBANTE
+                            row['VENDEDORA']     = venta.ASESOR || '';
+                            row['MEDIO DE PAGO'] = venta.TIPO_COMPROBANTE || '';
                             
-                            // Array para acumular observaciones
                             const observaciones = [];
-
                             if (venta._ventasMultiples) {
                                 observaciones.push(`💳 Se consolidaron ${venta._cantidadVentas} pagos para este alumno`);
                             }
-
                             if (venta._matchType === 'dni_compatible_nombre') {
-                                observaciones.push('🧩 Venta vinculada por DNI compatible + nombre (caso de 0 final o variante equivalente)');
+                                observaciones.push('🧩 Venta vinculada por DNI compatible + nombre');
                             } else if (venta._matchType === 'nombre_compatible_unico') {
                                 observaciones.push('🧩 Venta vinculada por nombre compatible único');
                             }
-                            
-                            // Si hubo conversión de moneda, agregarlo a observaciones
                             if (venta.MONEDA_ORIGINAL !== 'ARS') {
                                 const tasaUsada = venta.MONEDA_ORIGINAL === 'USD' ? currencyRates.USD : currencyRates.BOB;
                                 observaciones.push(`💱 Pago en ${venta.MONEDA_ORIGINAL}: ${venta.VALOR_PAGADO_ORIGINAL} ${venta.MONEDA_ORIGINAL} = ${valorPagado.toLocaleString('es-AR')} ARS (tasa: ${tasaUsada})`);
                             }
                             
-                            // NUEVA LÓGICA: Detección inteligente basada en coherencia inscripción-cuotas
-                            // La inscripción SIEMPRE es el valor pagado (puede ser más o menos que la moda)
-                            // Si pagó más o menos que la moda, el ajuste se refleja en las cuotas
-                            
                             row['INSCRIPCIÓN'] = valorPagado;
                             
-                            // Verificar si es "Paz y Salvo" (ya pagó todo)
                             if (infoCuotas.pazYSalvo) {
-                                console.log(`✅ PAZ Y SALVO: ${alumno.APELLIDOS} - Valor Pendiente: "${venta.VALOR_PENDIENTE_STR}" → Ya pagó todo`);
-                                
-                                // Calcular cuotas retroactivamente
-                                // Si pagó significativamente más que la moda, asumimos que pagó inscripción + cuotas
                                 const totalPagado = valorPagado;
                                 const excedente = totalPagado - modaFinal;
-                                
-                                if (excedente > modaFinal * 0.20) { // Si pagó al menos 20% más
-                                    // PAGO COMPLETO - Deducir que pagó el curso completo
-                                    const cuotasDeducidas = modaCuotas; // Usar moda de cuotas calculada
-                                    // Redondear SIEMPRE HACIA ARRIBA con máximo 2 decimales
+                                if (excedente > modaFinal * 0.20) {
+                                    const cuotasDeducidas = modaCuotas;
                                     const montoPorCuota = Math.ceil((excedente / cuotasDeducidas) * 100) / 100;
                                     const porcentajeComision = 0.14;
                                     const fechaFormateada = formatearFechaExcel(venta.MARCA_TEMPORAL);
-                                    
-                                    row['CUOTAS'] = montoPorCuota; // ← Ahora muestra el MONTO por cuota, no la cantidad
-                                    row['_cuotasCantidad'] = cuotasDeducidas; // ← Mantener internamente para cálculos
-                                    row['INSCRIPCIÓN'] = modaFinal; // Corregir inscripción a la moda
-                                    
+                                    row['CUOTAS'] = montoPorCuota;
+                                    row['_cuotasCantidad'] = cuotasDeducidas;
+                                    row['INSCRIPCIÓN'] = modaFinal;
                                     for (let i = 1; i <= cuotasDeducidas; i++) {
                                         row[`C${i}_FECHA`] = fechaFormateada;
                                         row[`C${i}_COD_REF`] = venta.COMPROBANTE;
@@ -1480,33 +1117,16 @@
                                         row[`C${i}_%`] = porcentajeComision;
                                         row[`C${i}_NETO`] = Math.ceil(montoPorCuota * (1 - porcentajeComision) * 100) / 100;
                                     }
-                                    
-                                    // OBSERVACIÓN: Pago completo deducido
                                     observaciones.push(`✅ Pagó curso completo ($${totalPagado.toLocaleString('es-AR')}). Moda inscripción: $${modaFinal.toLocaleString('es-AR')}. ${cuotasDeducidas} cuotas deducidas de $${montoPorCuota.toLocaleString('es-AR')} c/u`);
                                 }
-                                
                             } else if (infoCuotas.operaciones && infoCuotas.operaciones.length > 0) {
-                                // Hay información explícita de cuotas pendientes
-                                
-                                // Calcular el monto promedio de las cuotas para mostrar en columna CUOTAS
-                                const montoPromedioCuota = montoCuota; // Ya calculado antes
-                                
-                                row['CUOTAS'] = montoPromedioCuota; // ← Ahora muestra el MONTO promedio, no la cantidad
-                                row['_cuotasCantidad'] = numeroCuotas; // ← Mantener internamente para cálculos
-                                
+                                row['CUOTAS'] = montoCuota;
+                                row['_cuotasCantidad'] = numeroCuotas;
                                 const porcentajeComision = 0.14;
-                                
-                                // Distribuir las operaciones de cuotas en las columnas
                                 let cuotaIndex = 1;
-                                
                                 infoCuotas.operaciones.forEach(operacion => {
-                                    if (operacion.error) {
-                                        observaciones.push('⚠️ Error: falta monto en cuota');
-                                        return;
-                                    }
-                                    
+                                    if (operacion.error) { observaciones.push('⚠️ Error: falta monto en cuota'); return; }
                                     for (let i = 0; i < operacion.cuotas && cuotaIndex <= 4; i++) {
-                                        // Las cuotas están PENDIENTES (no llevan fecha ni referencia)
                                         row[`C${cuotaIndex}_FECHA`] = '';
                                         row[`C${cuotaIndex}_COD_REF`] = '';
                                         row[`C${cuotaIndex}_$`] = operacion.monto;
@@ -1515,45 +1135,23 @@
                                         cuotaIndex++;
                                     }
                                 });
-                                
-                                console.log(`📋 CUOTAS PENDIENTES: ${alumno.APELLIDOS} - Inscripción: $${valorPagado}, ${numeroCuotas} cuota(s) pendiente(s)`);
-                                
-                                // Si pagó diferente a la moda en inscripción, agregar nota
                                 const diferenciaInscripcion = valorPagado - modaFinal;
                                 if (Math.abs(diferenciaInscripcion) > 100) {
-                                    if (diferenciaInscripcion > 0) {
-                                        observaciones.push(`💰 Inscripción: Pagó $${diferenciaInscripcion.toLocaleString('es-AR')} más que moda ($${modaFinal.toLocaleString('es-AR')}). Total inscripción: $${valorPagado.toLocaleString('es-AR')}. Diferencia ajustada en cuotas`);
-                                    } else {
-                                        observaciones.push(`💰 Inscripción: Pagó $${Math.abs(diferenciaInscripcion).toLocaleString('es-AR')} menos que moda ($${modaFinal.toLocaleString('es-AR')}). Total inscripción: $${valorPagado.toLocaleString('es-AR')}. Diferencia ajustada en cuotas`);
-                                    }
+                                    if (diferenciaInscripcion > 0)
+                                        observaciones.push(`💰 Inscripción: Pagó $${diferenciaInscripcion.toLocaleString('es-AR')} más que moda ($${modaFinal.toLocaleString('es-AR')})`);
+                                    else
+                                        observaciones.push(`💰 Inscripción: Pagó $${Math.abs(diferenciaInscripcion).toLocaleString('es-AR')} menos que moda ($${modaFinal.toLocaleString('es-AR')})`);
                                 }
-                                
-                                // Verificar si pagó cuotas adelantadas
-                                const totalCuotasEsperado = infoCuotas.operaciones.reduce((sum, op) => sum + (op.monto * op.cuotas), 0);
-                                if (totalCuotasEsperado > 0) {
-                                    // Calcular si pagó más de lo esperado en cuotas
-                                    const totalEsperadoCurso = modaFinal + totalCuotasEsperado;
-                                    if (valorPagado > totalEsperadoCurso) {
-                                        const adelanto = valorPagado - modaFinal;
-                                        observaciones.push(`⚡ Adelantó cuotas: Pagó $${adelanto.toLocaleString('es-AR')} extra. Se distribuyó en ${numeroCuotas} cuota(s) según valor pendiente`);
-                                    }
-                                }
-                                
                             } else {
-                                // No hay información de cuotas o formato no reconocido
-                                console.log(`⚠️ SIN INFO CUOTAS: ${alumno.APELLIDOS} - Inscripción: $${valorPagado}, Pendiente: "${venta.VALOR_PENDIENTE_STR}"`);
-                                
                                 if (venta.VALOR_PENDIENTE_STR && venta.VALOR_PENDIENTE_STR !== '' && venta.VALOR_PENDIENTE_STR !== '0') {
                                     observaciones.push(`⚠️ Formato valor pendiente no reconocido: "${venta.VALOR_PENDIENTE_STR}"`);
                                 }
                             }
                             
-                            // Asignar observaciones solo si hay algo relevante
                             if (!esBecado && observaciones.length > 0) {
                                 row['OBSERVACIÓN'] = observaciones.join(' | ');
                             }
                         } else {
-                            // Sin venta
                             row['ESTADO'] = 'SIN VENTA';
                             row['OBSERVACIÓN'] = 'Sin registro de venta';
                             alertsData.push({
@@ -1565,15 +1163,13 @@
                         processedData.push(row);
                     });
                     
-                    // Detectar ventas sin alumno asociado real (solo las que no fueron vinculadas)
+                    // Detectar ventas sin alumno asociado
                     ventas.forEach(v => {
                         if (matchedVentaIndexes.has(v._idx)) return;
-
                         const dniNorm = normalizeDNI(v.DNI);
                         const nombreVenta = [v.APELLIDOS, v.NOMBRES].filter(Boolean).join(' ').trim() || 'Sin nombre identificado';
                         const existeDNICompatible = dniNorm ? alumnos.some(a => areCompatibleDNIs(a.DNI, dniNorm)) : false;
                         const existeNombreCompatible = alumnos.some(a => areCompatibleNames(a, v));
-
                         if (!existeDNICompatible && !existeNombreCompatible) {
                             alertsData.push({
                                 tipo: 'mal_cargado',
@@ -1582,17 +1178,13 @@
                         }
                     });
                     
-                    // ORDENAR ALFABÉTICAMENTE por APELLIDOS y NOMBRES
+                    // Ordenar alfabéticamente
                     processedData.sort((a, b) => {
-                        const comparacionApellidos = a.APELLIDOS.localeCompare(b.APELLIDOS, 'es');
-                        if (comparacionApellidos !== 0) return comparacionApellidos;
+                        const cmp = a.APELLIDOS.localeCompare(b.APELLIDOS, 'es');
+                        if (cmp !== 0) return cmp;
                         return a.NOMBRES.localeCompare(b.NOMBRES, 'es');
                     });
-                    
-                    // Re-numerar después de ordenar
-                    processedData.forEach((row, index) => {
-                        row['Nº'] = index + 1;
-                    });
+                    processedData.forEach((row, index) => { row['Nº'] = index + 1; });
                     
                     document.getElementById('loading').classList.remove('active');
                     displayPreview();
@@ -1603,57 +1195,41 @@
                 }
             }, 500);
         }
-        
 
+        // ─────────────────────────────────────────────────────────────────
+        // DISPLAY & EXPORT
+        // ─────────────────────────────────────────────────────────────────
         function escapeHtml(value) {
             return String(value ?? '')
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#39;');
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
         }
 
         function showErrorsModal() {
             const modal = document.getElementById('errors-modal');
             const summary = document.getElementById('errors-summary');
             const container = document.getElementById('errors-content');
-            
             if (!modal || !summary || !container) return;
-            
             if (!alertsData.length) {
                 container.innerHTML = '<p>No se detectaron errores para revisar.</p>';
                 summary.textContent = 'No se detectaron errores para revisión.';
                 return;
             }
-            
-            const labels = {
-                sin_venta: 'Alumno sin registro en ventas',
-                mal_cargado: 'Venta sin alumno asociado',
-                becado: 'Alumno becado'
-            };
-            
+            const labels = { sin_venta: 'Alumno sin registro en ventas', mal_cargado: 'Venta sin alumno asociado', becado: 'Alumno becado' };
             const grouped = alertsData.reduce((acc, alert) => {
                 const key = alert.tipo || 'otro';
                 if (!acc[key]) acc[key] = [];
                 acc[key].push(alert.mensaje);
                 return acc;
             }, {});
-            
             const total = alertsData.length;
             summary.textContent = `Se detectaron ${total} caso${total !== 1 ? 's' : ''} para revisar.`;
-            
             let html = '';
             Object.entries(grouped).forEach(([tipo, mensajes]) => {
-                html += `<div style="margin-bottom: 18px;">`;
-                html += `<h3 style="margin-bottom: 8px; color: var(--escencial-green);">${escapeHtml(labels[tipo] || tipo)} (${mensajes.length})</h3>`;
-                html += '<ul style="padding-left: 20px; line-height: 1.6;">';
-                mensajes.forEach(msg => {
-                    html += `<li>${escapeHtml(msg)}</li>`;
-                });
+                html += `<div style="margin-bottom:18px;"><h3 style="margin-bottom:8px;color:var(--escencial-green);">${escapeHtml(labels[tipo]||tipo)} (${mensajes.length})</h3><ul style="padding-left:20px;line-height:1.6;">`;
+                mensajes.forEach(msg => { html += `<li>${escapeHtml(msg)}</li>`; });
                 html += '</ul></div>';
             });
-            
             container.innerHTML = html;
             modal.classList.add('active');
         }
@@ -1667,58 +1243,34 @@
             const total = processedData.length;
             const conVentas = processedData.filter(r => r.INSCRIPCIÓN > 0).length;
             const totalInsc = processedData.reduce((s, r) => s + (r.INSCRIPCIÓN || 0), 0);
-            
-            let totalCuot = 0;
-            let totalCuotNeto = 0;
-            
+            let totalCuot = 0, totalCuotNeto = 0;
             processedData.forEach(r => {
                 for (let i = 1; i <= 4; i++) {
                     totalCuot += parseFloat(r[`C${i}_$`] || 0);
                     totalCuotNeto += parseFloat(r[`C${i}_NETO`] || 0);
                 }
             });
-            
             document.getElementById('stats').innerHTML = `
-                <div class="stat-card">
-                    <div class="stat-value">${total}</div>
-                    <div class="stat-label">Total Registros</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">${conVentas}</div>
-                    <div class="stat-label">Con Ventas</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">$${totalInsc.toLocaleString('es-AR')}</div>
-                    <div class="stat-label">Total Inscripciones</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">$${totalCuot.toLocaleString('es-AR')}</div>
-                    <div class="stat-label">Total Cuotas</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">$${totalCuotNeto.toLocaleString('es-AR')}</div>
-                    <div class="stat-label">Total Cuotas Neto</div>
-                </div>
+                <div class="stat-card"><div class="stat-value">${total}</div><div class="stat-label">Total Registros</div></div>
+                <div class="stat-card"><div class="stat-value">${conVentas}</div><div class="stat-label">Con Ventas</div></div>
+                <div class="stat-card"><div class="stat-value">$${totalInsc.toLocaleString('es-AR')}</div><div class="stat-label">Total Inscripciones</div></div>
+                <div class="stat-card"><div class="stat-value">$${totalCuot.toLocaleString('es-AR')}</div><div class="stat-label">Total Cuotas</div></div>
+                <div class="stat-card"><div class="stat-value">$${totalCuotNeto.toLocaleString('es-AR')}</div><div class="stat-label">Total Cuotas Neto</div></div>
             `;
             
             if (alertsData.length > 0) {
-                const becadosCount = alertsData.filter(a => a.tipo === 'becado').length;
+                const becadosCount   = alertsData.filter(a => a.tipo === 'becado').length;
                 const malCargadosCount = alertsData.filter(a => a.tipo === 'mal_cargado').length;
-                const sinVentaCount = alertsData.filter(a => a.tipo === 'sin_venta').length;
-                
+                const sinVentaCount  = alertsData.filter(a => a.tipo === 'sin_venta').length;
                 let alertText = '⚠️ Casos detectados (';
                 let parts = [];
-                if (becadosCount > 0) parts.push(`${becadosCount} becado${becadosCount > 1 ? 's' : ''}`);
+                if (becadosCount > 0)    parts.push(`${becadosCount} becado${becadosCount > 1 ? 's' : ''}`);
                 if (malCargadosCount > 0) parts.push(`${malCargadosCount} mal cargado${malCargadosCount > 1 ? 's' : ''}`);
-                if (sinVentaCount > 0) parts.push(`${sinVentaCount} sin venta`);
+                if (sinVentaCount > 0)   parts.push(`${sinVentaCount} sin venta`);
                 alertText += parts.join(', ') + ')';
-                
                 document.getElementById('alerts-text').textContent = alertText;
-                
                 let alertsHTML = '';
-                alertsData.forEach(alert => {
-                    alertsHTML += `<div class="alert-item"><strong>${alert.mensaje}</strong></div>`;
-                });
+                alertsData.forEach(alert => { alertsHTML += `<div class="alert-item"><strong>${alert.mensaje}</strong></div>`; });
                 document.getElementById('alerts-content').innerHTML = alertsHTML;
                 document.getElementById('alerts-toggle').classList.add('active');
                 showErrorsModal();
@@ -1726,41 +1278,32 @@
             
             const maxC = Math.max(...processedData.map(r => r._cuotasCantidad || 0));
             const cuoShow = Math.max(maxC, 1);
+            const cols = ['col-c1','col-c2','col-c3','col-c4'];
             
             let html = '<table><thead><tr>';
             html += '<th rowspan="2" class="col-estado">Nº</th><th rowspan="2" class="col-estado">ESTADO</th><th rowspan="2" class="col-obs">OBS</th>';
             html += '<th colspan="6" class="col-datos-personales">DATOS PERSONALES</th><th colspan="4" class="col-venta">VENTA</th>';
-            
-            const cols = ['col-c1','col-c2','col-c3','col-c4'];
-            for (let i = 0; i < cuoShow; i++) {
-                html += `<th colspan="5" class="${cols[i]}">C${i+1}</th>`;
-            }
-            
-            html += '</tr><tr><th class="col-datos-personales">ID</th><th class="col-datos-personales">APELLIDOS</th>';
-            html += '<th class="col-datos-personales">NOMBRES</th><th class="col-datos-personales">DNI</th>';
-            html += '<th class="col-datos-personales">CELULAR</th><th class="col-datos-personales">MAIL</th>';
+            for (let i = 0; i < cuoShow; i++) html += `<th colspan="5" class="${cols[i]}">C${i+1}</th>`;
+            html += '</tr><tr>';
+            html += '<th class="col-datos-personales">ID</th><th class="col-datos-personales">APELLIDOS</th><th class="col-datos-personales">NOMBRES</th>';
+            html += '<th class="col-datos-personales">DNI</th><th class="col-datos-personales">CELULAR</th><th class="col-datos-personales">MAIL</th>';
             html += '<th class="col-venta">VENDEDORA</th><th class="col-venta">INSCRIPCIÓN</th><th class="col-venta">CUOTAS</th><th class="col-venta">MEDIO PAGO</th>';
-            
             for (let i = 0; i < cuoShow; i++) {
-                html += `<th class="${cols[i]}">FECHA</th><th class="${cols[i]}">CÓD REF</th>`;
-                html += `<th class="${cols[i]}">$</th><th class="${cols[i]}">%</th><th class="${cols[i]}">NETO</th>`;
+                html += `<th class="${cols[i]}">FECHA</th><th class="${cols[i]}">CÓD REF</th><th class="${cols[i]}">$</th><th class="${cols[i]}">%</th><th class="${cols[i]}">NETO</th>`;
             }
             html += '</tr></thead><tbody>';
-            
             processedData.slice(0, 50).forEach(r => {
                 html += '<tr>';
-                html += `<td>${r['Nº']}</td><td>${r['ESTADO']}</td><td>${r['OBSERVACIÓN']}</td>`;
+                html += `<td>${r['Nº']}</td><td>${r['ESTADO']}</td><td>${escapeHtml(r['OBSERVACIÓN'])}</td>`;
                 html += `<td>${r['ID']}</td><td>${r['APELLIDOS']}</td><td>${r['NOMBRES']}</td>`;
                 html += `<td>${r['DNI']}</td><td>${r['CELULAR']}</td><td>${r['MAIL']}</td>`;
                 html += `<td>${r['VENDEDORA']}</td><td>${r['INSCRIPCIÓN']}</td><td>${r['CUOTAS']}</td><td>${r['MEDIO DE PAGO']}</td>`;
-                
                 for (let i = 1; i <= cuoShow; i++) {
                     html += `<td>${r[`C${i}_FECHA`]||''}</td><td>${r[`C${i}_COD_REF`]||''}</td>`;
                     html += `<td>${r[`C${i}_$`]||''}</td><td>${r[`C${i}_%`]||''}</td><td>${r[`C${i}_NETO`]||0}</td>`;
                 }
                 html += '</tr>';
             });
-            
             html += '</tbody></table>';
             document.getElementById('table-wrapper').innerHTML = html;
             document.getElementById('preview-section').classList.add('active');
@@ -1770,7 +1313,6 @@
             try {
                 const wb = XLSX.utils.book_new();
                 const data = [];
-                
                 const maxC = Math.max(...processedData.map(r => r._cuotasCantidad || 0));
                 const cuoShow = Math.max(maxC, 1);
                 
@@ -1793,27 +1335,21 @@
                 
                 const ws = XLSX.utils.aoa_to_sheet(data);
                 
-                // AGREGAR FÓRMULAS para calcular NETO automáticamente
                 processedData.forEach((r, idx) => {
-                    const rowNum = idx + 3; // +3 porque las filas 1 y 2 son headers
-                    
+                    const rowNum = idx + 3;
                     for (let i = 1; i <= cuoShow; i++) {
-                        const netoCol = XLSX.utils.encode_col(13 + (i-1)*5 + 4); // Columna NETO
-                        const montoCol = XLSX.utils.encode_col(13 + (i-1)*5 + 2); // Columna $
-                        const porcCol = XLSX.utils.encode_col(13 + (i-1)*5 + 3); // Columna %
-                        
+                        const netoCol = XLSX.utils.encode_col(13 + (i-1)*5 + 4);
+                        const montoCol = XLSX.utils.encode_col(13 + (i-1)*5 + 2);
+                        const porcCol  = XLSX.utils.encode_col(13 + (i-1)*5 + 3);
                         const cellRef = `${netoCol}${rowNum}`;
-                        const formula = `=${montoCol}${rowNum}*(1-${porcCol}${rowNum})`;
-                        
                         if (r[`C${i}_$`] && r[`C${i}_$`] > 0) {
-                            ws[cellRef] = { t: 'n', f: formula };
+                            ws[cellRef] = { t: 'n', f: `=${montoCol}${rowNum}*(1-${porcCol}${rowNum})` };
                         }
                     }
                 });
                 
                 ws['!cols'] = [{wch:5},{wch:10},{wch:20},{wch:8},{wch:15},{wch:15},{wch:12},{wch:14},{wch:25},{wch:12},{wch:12},{wch:10},{wch:12}];
                 for (let i = 0; i < cuoShow * 5; i++) ws['!cols'].push({wch:12});
-                
                 ws['!merges'] = [{s:{r:0,c:3},e:{r:0,c:8}}];
                 for (let i = 0; i < cuoShow; i++) ws['!merges'].push({s:{r:0,c:13+(i*5)},e:{r:0,c:17+(i*5)}});
                 
