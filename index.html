@@ -739,6 +739,18 @@
             <button class="btn btn-primary" onclick="confirmCurrency()">Confirmar y Continuar</button>
         </div>
     </div>
+
+    <!-- Modal de errores detectados -->
+    <div id="errors-modal" class="modal">
+        <div class="modal-content" style="max-width: 900px; width: 92%; max-height: 85vh; overflow-y: auto;">
+            <h2>⚠️ Casos detectados para revisión</h2>
+            <p id="errors-summary">Se encontraron registros que requieren revisión manual.</p>
+            <div id="errors-content" style="text-align: left; margin: 20px 0;"></div>
+            <div style="display:flex; gap:12px; justify-content:flex-end; flex-wrap:wrap;">
+                <button class="btn" style="background: linear-gradient(135deg, #6c757d, #495057); color: white;" onclick="closeErrorsModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
     
     <script>
         let alumnosData = null;
@@ -1452,6 +1464,10 @@
                             // Sin venta
                             row['ESTADO'] = 'SIN VENTA';
                             row['OBSERVACIÓN'] = 'Sin registro de venta';
+                            alertsData.push({
+                                tipo: 'sin_venta',
+                                mensaje: `⚠️ ALUMNO SIN REGISTRO EN VENTAS: ${alumno.APELLIDOS} ${alumno.NOMBRES} (DNI: ${alumno.DNI})`
+                            });
                         }
                         
                         processedData.push(row);
@@ -1490,6 +1506,65 @@
             }, 500);
         }
         
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function showErrorsModal() {
+            const modal = document.getElementById('errors-modal');
+            const summary = document.getElementById('errors-summary');
+            const container = document.getElementById('errors-content');
+            
+            if (!modal || !summary || !container) return;
+            
+            if (!alertsData.length) {
+                container.innerHTML = '<p>No se detectaron errores para revisar.</p>';
+                summary.textContent = 'No se detectaron errores para revisión.';
+                return;
+            }
+            
+            const labels = {
+                sin_venta: 'Alumno sin registro en ventas',
+                mal_cargado: 'Venta sin alumno asociado',
+                becado: 'Alumno becado'
+            };
+            
+            const grouped = alertsData.reduce((acc, alert) => {
+                const key = alert.tipo || 'otro';
+                if (!acc[key]) acc[key] = [];
+                acc[key].push(alert.mensaje);
+                return acc;
+            }, {});
+            
+            const total = alertsData.length;
+            summary.textContent = `Se detectaron ${total} caso${total !== 1 ? 's' : ''} para revisar.`;
+            
+            let html = '';
+            Object.entries(grouped).forEach(([tipo, mensajes]) => {
+                html += `<div style="margin-bottom: 18px;">`;
+                html += `<h3 style="margin-bottom: 8px; color: var(--escencial-green);">${escapeHtml(labels[tipo] || tipo)} (${mensajes.length})</h3>`;
+                html += '<ul style="padding-left: 20px; line-height: 1.6;">';
+                mensajes.forEach(msg => {
+                    html += `<li>${escapeHtml(msg)}</li>`;
+                });
+                html += '</ul></div>';
+            });
+            
+            container.innerHTML = html;
+            modal.classList.add('active');
+        }
+
+        function closeErrorsModal() {
+            const modal = document.getElementById('errors-modal');
+            if (modal) modal.classList.remove('active');
+        }
+
         function displayPreview() {
             const total = processedData.length;
             const conVentas = processedData.filter(r => r.INSCRIPCIÓN > 0).length;
@@ -1531,24 +1606,24 @@
             if (alertsData.length > 0) {
                 const becadosCount = alertsData.filter(a => a.tipo === 'becado').length;
                 const malCargadosCount = alertsData.filter(a => a.tipo === 'mal_cargado').length;
+                const sinVentaCount = alertsData.filter(a => a.tipo === 'sin_venta').length;
                 
-                // Solo mostrar alertas si hay becados o mal cargados
-                if (becadosCount > 0 || malCargadosCount > 0) {
-                    let alertText = '⚠️ Alertas Importantes (';
-                    let parts = [];
-                    if (becadosCount > 0) parts.push(`${becadosCount} becado${becadosCount > 1 ? 's' : ''}`);
-                    if (malCargadosCount > 0) parts.push(`${malCargadosCount} mal cargado${malCargadosCount > 1 ? 's' : ''}`);
-                    alertText += parts.join(', ') + ')';
-                    
-                    document.getElementById('alerts-text').textContent = alertText;
-                    
-                    let alertsHTML = '';
-                    alertsData.forEach(alert => {
-                        alertsHTML += `<div class="alert-item"><strong>${alert.mensaje}</strong></div>`;
-                    });
-                    document.getElementById('alerts-content').innerHTML = alertsHTML;
-                    document.getElementById('alerts-toggle').classList.add('active');
-                }
+                let alertText = '⚠️ Casos detectados (';
+                let parts = [];
+                if (becadosCount > 0) parts.push(`${becadosCount} becado${becadosCount > 1 ? 's' : ''}`);
+                if (malCargadosCount > 0) parts.push(`${malCargadosCount} mal cargado${malCargadosCount > 1 ? 's' : ''}`);
+                if (sinVentaCount > 0) parts.push(`${sinVentaCount} sin venta`);
+                alertText += parts.join(', ') + ')';
+                
+                document.getElementById('alerts-text').textContent = alertText;
+                
+                let alertsHTML = '';
+                alertsData.forEach(alert => {
+                    alertsHTML += `<div class="alert-item"><strong>${alert.mensaje}</strong></div>`;
+                });
+                document.getElementById('alerts-content').innerHTML = alertsHTML;
+                document.getElementById('alerts-toggle').classList.add('active');
+                showErrorsModal();
             }
             
             const maxC = Math.max(...processedData.map(r => r._cuotasCantidad || 0));
