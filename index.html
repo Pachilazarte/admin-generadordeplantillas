@@ -817,7 +817,37 @@
             if (!dni) return '';
             return String(dni).replace(/\D/g, '');
         }
-        
+
+        function simplifyNameTokens(text) {
+            return normalizeText(text)
+                .split(' ')
+                .filter(Boolean)
+                .filter(token => token.length > 1);
+        }
+
+        function areCompatibleDNIs(dniA, dniB) {
+            const a = normalizeDNI(dniA);
+            const b = normalizeDNI(dniB);
+            if (!a || !b) return false;
+            if (a === b) return true;
+
+            const trimTrailingZero = value => value.endsWith('0') ? value.slice(0, -1) : value;
+            return trimTrailingZero(a) === trimTrailingZero(b);
+        }
+
+        function areCompatibleNames(personaA, personaB) {
+            const nombresA = simplifyNameTokens(personaA.NOMBRES || personaA.Nombre || '');
+            const nombresB = simplifyNameTokens(personaB.NOMBRES || personaB.Nombre || '');
+            const apellidosA = simplifyNameTokens(personaA.APELLIDOS || personaA.Apellido || '');
+            const apellidosB = simplifyNameTokens(personaB.APELLIDOS || personaB.Apellido || '');
+
+            const hayNombreCompatible = nombresA.some(token => nombresB.includes(token)) || nombresB.some(token => nombresA.includes(token));
+            const apellidosComunes = apellidosA.filter(token => apellidosB.includes(token));
+            const hayApellidoCompatible = apellidosComunes.length >= 1;
+
+            return hayNombreCompatible && hayApellidoCompatible;
+        }
+
         // FUNCIÓN: Detectar moneda extranjera y limpiar formatos
         // Formato: Si el valor termina en .01 = USD, si termina en .07 = BOB (Peso Boliviano)
         // También maneja: "$16.000", "1x96000", valores truncados como "16" o "17"
@@ -1058,18 +1088,26 @@
                     console.log(`🎯 MODA PRELIMINAR (para corrección): $${modaPreliminar}`);
                     
                     // Normalizar alumnos
-                    const alumnos = alumnosData.map(a => ({
+                    const alumnos = alumnosData.map((a, idx) => ({
                         ID: a.ID || '',
                         APELLIDOS: (a.Apellido || '').trim(),
                         NOMBRES: (a.Nombre || '').trim(),
                         DNI: normalizeDNI(a.DNI),
                         CELULAR: String(a.Celular || '').trim(), // Copia literal del celular
                         MAIL: (a.Email || '').trim(),
-                        _searchKey: normalizeText(`${a.Apellido} ${a.Nombre} ${a.DNI}`)
+                        _idx: idx,
+                        _searchKey: normalizeText(`${a.Apellido} ${a.Nombre} ${a.DNI}`),
+                        _nameKey: normalizeText(`${a.Apellido || ''} ${a.Nombre || ''}`)
                     }));
                     
-                    // Crear conjunto de DNIs de alumnos
-                    const alumnosDNIs = new Set(alumnos.map(a => normalizeText(a.DNI)));
+                    const matchedVentaIndexes = new Set();
+                    const alumnosDNIs = new Set(alumnos.map(a => normalizeDNI(a.DNI)).filter(Boolean));
+                    const alumnosDNIsCompatibles = new Set(
+                        alumnos
+                            .map(a => normalizeDNI(a.DNI))
+                            .filter(Boolean)
+                            .flatMap(dni => [dni, dni.endsWith('0') ? dni.slice(0, -1) : dni])
+                    );
                     
                     // NUEVA FUNCIÓN MEJORADA: Parsear información de cuotas desde VALOR PENDIENTE
                     // Maneja todos los patrones posibles: "x", "por", "*", "y", "+", ",", números solos, etc.
@@ -1199,7 +1237,7 @@
                     }
                     
                     // Normalizar ventas (SEGUNDA PASADA con moda ya calculada)
-                    const ventas = ventasData.map(v => {
+                    const ventas = ventasData.map((v, ventaIndex) => {
                         const infoCuotas = parsearCuotas(v['VALOR PENDIENTE']);
                         
                         // CONVERTIR VALOR PAGADO si está en moneda extranjera
@@ -1241,7 +1279,9 @@
                             ASESOR: asesor.trim(), // ← Flexible: busca ASESOR o ASESORA
                             CONCEPTO: (v['CONCEPTO PAGADO'] || '').trim(),
                             TIPO_COMPROBANTE: (v['TIPO COMPROBANTE'] || '').trim(), // ← Cambiado a TIPO COMPROBANTE
-                            _searchKey: normalizeText(`${v.APELLIDOS} ${v.NOMBRES} ${v.DNI}`)
+                            _idx: ventaIndex,
+                            _searchKey: normalizeText(`${v.APELLIDOS} ${v.NOMBRES} ${v.DNI}`),
+                            _nameKey: normalizeText(`${v.APELLIDOS || ''} ${v.NOMBRES || ''}`)
                         };
                     });
                     
@@ -1251,9 +1291,51 @@
                     // CALCULAR MODA DE CUOTAS
                     const modaCuotas = calcularModaCuotas(ventas);
                     
+                    // Consolidar múltiples ventas del mismo alumno
+                    function consolidarVentasAlumno(ventasAlumno, tipoMatch = 'dni_exacto') {
+                        if (!ventasAlumno || ventasAlumno.length === 0) return null;
+
+                        const ventasOrdenadas = [...ventasAlumno].sort((a, b) => {
+                            const fechaA = a.MARCA_TEMPORAL ? new Date(a.MARCA_TEMPORAL).getTime() : 0;
+                            const fechaB = b.MARCA_TEMPORAL ? new Date(b.MARCA_TEMPORAL).getTime() : 0;
+                            return fechaB - fechaA;
+                        });
+
+                        const ventaBase = { ...ventasOrdenadas[0] };
+                        ventaBase.VALOR_PAGADO = ventasAlumno.reduce((sum, v) => sum + (parseFloat(v.VALOR_PAGADO) || 0), 0);
+                        ventaBase.VALOR_PAGADO_ORIGINAL = ventasAlumno.reduce((sum, v) => sum + (parseFloat(v.VALOR_PAGADO_ORIGINAL ?? v.VALOR_PAGADO) || 0), 0);
+                        ventaBase.COMPROBANTE = ventasAlumno.map(v => v.COMPROBANTE).filter(Boolean).join(' | ');
+                        ventaBase._ventasMultiples = ventasAlumno.length > 1;
+                        ventaBase._cantidadVentas = ventasAlumno.length;
+                        ventaBase._matchType = tipoMatch;
+                        ventaBase._matchedVentaIndexes = ventasAlumno.map(v => v._idx);
+
+                        return ventaBase;
+                    }
+
+                    function buscarVentasDeAlumno(alumno) {
+                        const ventasDisponibles = ventas.filter(v => !matchedVentaIndexes.has(v._idx));
+
+                        const porDniExacto = ventasDisponibles.filter(v => normalizeDNI(v.DNI) === normalizeDNI(alumno.DNI));
+                        if (porDniExacto.length > 0) return { ventas: porDniExacto, tipo: 'dni_exacto' };
+
+                        const porDniCompatibleYNombre = ventasDisponibles.filter(v => areCompatibleDNIs(v.DNI, alumno.DNI) && areCompatibleNames(v, alumno));
+                        if (porDniCompatibleYNombre.length > 0) return { ventas: porDniCompatibleYNombre, tipo: 'dni_compatible_nombre' };
+
+                        const porNombreCompatible = ventasDisponibles.filter(v => areCompatibleNames(v, alumno));
+                        if (porNombreCompatible.length === 1) return { ventas: porNombreCompatible, tipo: 'nombre_compatible_unico' };
+
+                        return { ventas: [], tipo: '' };
+                    }
+
                     // Procesar cada alumno
                     alumnos.forEach((alumno, index) => {
-                        const venta = ventas.find(v => normalizeDNI(v.DNI) === normalizeDNI(alumno.DNI));
+                        const matchAlumno = buscarVentasDeAlumno(alumno);
+                        const venta = consolidarVentasAlumno(matchAlumno.ventas, matchAlumno.tipo);
+
+                        if (venta && venta._matchedVentaIndexes) {
+                            venta._matchedVentaIndexes.forEach(idx => matchedVentaIndexes.add(idx));
+                        }
                         
                         let row = {
                             'Nº': index + 1,
@@ -1347,6 +1429,16 @@
                             
                             // Array para acumular observaciones
                             const observaciones = [];
+
+                            if (venta._ventasMultiples) {
+                                observaciones.push(`💳 Se consolidaron ${venta._cantidadVentas} pagos para este alumno`);
+                            }
+
+                            if (venta._matchType === 'dni_compatible_nombre') {
+                                observaciones.push('🧩 Venta vinculada por DNI compatible + nombre (caso de 0 final o variante equivalente)');
+                            } else if (venta._matchType === 'nombre_compatible_unico') {
+                                observaciones.push('🧩 Venta vinculada por nombre compatible único');
+                            }
                             
                             // Si hubo conversión de moneda, agregarlo a observaciones
                             if (venta.MONEDA_ORIGINAL !== 'ARS') {
@@ -1473,13 +1565,19 @@
                         processedData.push(row);
                     });
                     
-                    // Detectar ventas mal cargadas (en VENTAS pero no en ALUMNOS)
-                    ventasData.forEach(v => {
-                        const dniNorm = normalizeText(normalizeDNI(v.DNI));
-                        if (!alumnosDNIs.has(dniNorm)) {
+                    // Detectar ventas sin alumno asociado real (solo las que no fueron vinculadas)
+                    ventas.forEach(v => {
+                        if (matchedVentaIndexes.has(v._idx)) return;
+
+                        const dniNorm = normalizeDNI(v.DNI);
+                        const nombreVenta = [v.APELLIDOS, v.NOMBRES].filter(Boolean).join(' ').trim() || 'Sin nombre identificado';
+                        const existeDNICompatible = dniNorm ? alumnos.some(a => areCompatibleDNIs(a.DNI, dniNorm)) : false;
+                        const existeNombreCompatible = alumnos.some(a => areCompatibleNames(a, v));
+
+                        if (!existeDNICompatible && !existeNombreCompatible) {
                             alertsData.push({
                                 tipo: 'mal_cargado',
-                                mensaje: `❌ MAL CARGADO: DNI ${v.DNI} (${v.APELLIDOS} ${v.NOMBRES}) está en VENTAS pero NO en ALUMNOS`
+                                mensaje: `❌ VENTA SIN ALUMNO ASOCIADO: DNI ${v.DNI || 'Sin DNI'} (${nombreVenta}) está en VENTAS pero no se pudo vincular con ALUMNOS`
                             });
                         }
                     });
